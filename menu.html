@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu e Barit - Pije</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0D1A40, #1E3D75);
+      color: #ecf0f1;
+      overflow-x: hidden;
+      text-align: center;
+    }
+
+    .hero {
+      padding: 80px 20px 40px;
+      animation: fadeInHero 1.2s ease;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #dcdde1;
+      margin-bottom: 40px;
+    }
+
+    .accordion {
+      background-color: #34495e;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 90%;
+      max-width: 700px;
+      margin: 10px auto;
+      border: none;
+      text-align: left;
+      font-size: 22px;
+      border-radius: 10px;
+      transition: background-color 0.3s, transform 0.3s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .accordion:hover {
+      background-color: #2c3e50;
+      transform: scale(1.02);
+    }
+
+    .panel {
+      width: 90%;
+      max-width: 700px;
+      background-color: #2c3e50;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+      margin: 0 auto 20px;
+      border-radius: 0 0 10px 10px;
+      padding: 0 20px;
+    }
+
+    .panel.open {
+      padding: 20px;
+    }
+
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #3d566e;
+      padding: 10px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .product.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product:last-child {
+      border-bottom: none;
+    }
+
+    .product-name {
+      font-size: 18px;
+      text-align: left;
+    }
+
+    .product-price {
+      font-size: 18px;
+      text-align: right;
+      color: #f1c40f;
+    }
+
+    .product-desc {
+      font-size: 14px;
+      color: #bdc3c7;
+      margin-top: 5px;
+      text-align: left;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #3D566E;
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      margin-top: 40px;
+    }
+
+    .back-button:hover {
+      background-color: #48627c;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      color: #ccc;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+    }
+
+    @keyframes fadeInHero {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1>Menuja e Pijeve 🍸</h1>
+  </div>
+
+  <button class="accordion">🍻 Birra</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Tirana</div>
+        <div class="product-desc">BIRRË tradicionale shqiptare, e freskët me trup të lehtë.</div>
+      </div>
+      <div class="product-price">250 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Korça</div>
+        <div class="product-desc">BIRRË artizanale e Shqipërisë me shije të ekuilibruar dhe freski unike.</div>
+      </div>
+      <div class="product-price">300 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Peja</div>
+        <div class="product-desc">BIRRË e lehtë me nuanca të buta malt.</div>
+      </div>
+      <div class="product-price">250 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Heineken</div>
+        <div class="product-desc">BIRRË premium holandeze me aromë të freskët dhe shije të pastër.</div>
+      </div>
+      <div class="product-price">400 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Amstel</div>
+        <div class="product-desc">BIRRË e artë me aromë të pasur dhe trup të plotë.</div>
+      </div>
+      <div class="product-price">400 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Corona</div>
+        <div class="product-desc">BIRRË me trup të lehtë, ideale me limon për freski perfekte.</div>
+      </div>
+      <div class="product-price">450 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Stella Artois</div>
+        <div class="product-desc">BIRRË belge me aromë të rafinuar dhe hidhësi të butë.</div>
+      </div>
+      <div class="product-price">450 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Guinness</div>
+        <div class="product-desc">BIRRË e zezë irlandeze me shije intensive dhe kremozitet unik.</div>
+      </div>
+      <div class="product-price">550 lekë</div>
+    </div>
+  
+  </div>
+  <button class="accordion">🍷 Verë</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Kallmet i Kuq</div>
+        <div class="product-desc">Verë shqiptare me trup të plotë dhe nota frutash të kuqe.</div>
+      </div>
+      <div class="product-price">500 lekë (gotë)</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Shesh i Bardhë</div>
+        <div class="product-desc">Verë e bardhë tradicionale shqiptare me aromë frutash të freskët.</div>
+      </div>
+      <div class="product-price">500 lekë (gotë)</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Prosecco</div>
+        <div class="product-desc">Verë italiane me gaz të lehtë dhe shije të freskët.</div>
+      </div>
+      <div class="product-price">600 lekë (gotë)</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Pinot Grigio</div>
+        <div class="product-desc">Verë e bardhë italiane me aromë agrumesh dhe trup të lehtë.</div>
+      </div>
+      <div class="product-price">600 lekë (gotë)</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Sauvignon Blanc</div>
+        <div class="product-desc">Verë e freskët franceze me aromë limoni dhe barishte të freskëta.</div>
+      </div>
+      <div class="product-price">700 lekë (gotë)</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Cabernet Sauvignon</div>
+        <div class="product-desc">Verë e kuqe me trup të plotë, tanina të buta dhe shije intensive frutash.</div>
+      </div>
+      <div class="product-price">700 lekë (gotë)</div>
+    </div>
+  </div>
+  <button class="accordion">🍸 Kokteile</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Mojito</div>
+        <div class="product-desc">Rum i bardhë, nenexhik, lime dhe sodë – freski perfekte.</div>
+      </div>
+      <div class="product-price">600 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Aperol Spritz</div>
+        <div class="product-desc">Aperol, Prosecco dhe sodë për një shije të hidhur-freskët.</div>
+      </div>
+      <div class="product-price">600 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Pina Colada</div>
+        <div class="product-desc">Rum, ananas dhe kokos për një përzierje tropikale të ëmbël.</div>
+      </div>
+      <div class="product-price">650 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Negroni</div>
+        <div class="product-desc">Gin, Campari dhe Vermouth – klasik italian me hidhësi elegante.</div>
+      </div>
+      <div class="product-price">700 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Long Island Ice Tea</div>
+        <div class="product-desc">Mix vodka, gin, tequila, rum dhe Coca-Cola – fuqi klasike.</div>
+      </div>
+      <div class="product-price">750 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Espresso Martini</div>
+        <div class="product-desc">Vodka, kafe espresso dhe likere për një ngritje elegante energjie.</div>
+      </div>
+      <div class="product-price">700 lekë</div>
+    </div>
+  </div>
+  <button class="accordion">🥃 Whisky</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Jameson</div>
+        <div class="product-desc">Whisky i butë irlandez me nota drithrash dhe mjaltë.</div>
+      </div>
+      <div class="product-price">500 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Jack Daniel's</div>
+        <div class="product-desc">Whisky amerikan me aromë druri dhe shije të pasur karamele.</div>
+      </div>
+      <div class="product-price">550 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Chivas Regal</div>
+        <div class="product-desc">Blended Scotch i rafinuar me trup të plotë dhe shije frutash të thata.</div>
+      </div>
+      <div class="product-price">700 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Johnnie Walker Black Label</div>
+        <div class="product-desc">Whisky me thellësi dhe nota të lehta tymi dhe vaniljeje.</div>
+      </div>
+      <div class="product-price">700 lekë</div>
+    </div>
+  </div>
+  <button class="accordion">🍸 Vodka</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Absolut</div>
+        <div class="product-desc">Vodka suedeze me shije të pastër dhe teksturë të butë.</div>
+      </div>
+      <div class="product-price">400 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Smirnoff</div>
+        <div class="product-desc">Vodka klasike me trup të lehtë, ideale për miksime.</div>
+      </div>
+      <div class="product-price">400 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Grey Goose</div>
+        <div class="product-desc">Vodka franceze ultra premium me shije të butë dhe elegante.</div>
+      </div>
+      <div class="product-price">700 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Belvedere</div>
+        <div class="product-desc">Vodka polake luksoze me nuanca frutash dhe një mbarim të kadifenjtë.</div>
+      </div>
+      <div class="product-price">750 lekë</div>
+    </div>
+  </div>
+  <button class="accordion">🥃 Rum</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Bacardi</div>
+        <div class="product-desc">Rum i bardhë i famshëm me shije të lehtë dhe aroma tropikale.</div>
+      </div>
+      <div class="product-price">450 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Captain Morgan</div>
+        <div class="product-desc">Rum i erëzuar me nuanca karamele dhe vanilje.</div>
+      </div>
+      <div class="product-price">500 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Havana Club</div>
+        <div class="product-desc">Rum kuban i njohur për shijen autentike dhe aromën e ngrohtë.</div>
+      </div>
+      <div class="product-price">500 lekë</div>
+    </div>
+  </div>
+  <button class="accordion">🌵 Tequila</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Jose Cuervo</div>
+        <div class="product-desc">Tequila klasike me shije agave dhe mbarim të butë.</div>
+      </div>
+      <div class="product-price">450 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Don Julio</div>
+        <div class="product-desc">Tequila premium me shije të rafinuar dhe thellësi agave blu.</div>
+      </div>
+      <div class="product-price">700 lekë</div>
+    </div>
+  </div>
+  <button class="accordion">🍸 Likere</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Baileys</div>
+        <div class="product-desc">Likere me bazë kafeje dhe kremi, shije e butë dhe ëmbëlsirë.</div>
+      </div>
+      <div class="product-price">400 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Amaretto Disaronno</div>
+        <div class="product-desc">Likere italiane me aromë bajameje dhe shije të ëmbël të pasur.</div>
+      </div>
+      <div class="product-price">450 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Jägermeister</div>
+        <div class="product-desc">Likere e fortë gjermane me aroma bimore dhe nuanca erëzash.</div>
+      </div>
+      <div class="product-price">450 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Sambuca</div>
+        <div class="product-desc">Likere italiane me aromë anise dhe teksturë të ëmbël.</div>
+      </div>
+      <div class="product-price">400 lekë</div>
+    </div>
+  </div>
+  <button class="accordion">🧃 Pije Jo-Alkoolike</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Coca-Cola</div>
+        <div class="product-desc">Pije klasike gazuese me shije të freskët dhe të ëmbël.</div>
+      </div>
+      <div class="product-price">200 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Fanta</div>
+        <div class="product-desc">Pije portokalli me gaz, e ëmbël dhe freskuese.</div>
+      </div>
+      <div class="product-price">200 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Sprite</div>
+        <div class="product-desc">Pije me gaz me shije limoni e limete.</div>
+      </div>
+      <div class="product-price">200 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Red Bull</div>
+        <div class="product-desc">Pije energjike me shije intensive dhe efekt freskues.</div>
+      </div>
+      <div class="product-price">350 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Ujë Mineral</div>
+        <div class="product-desc">Ujë natyral i freskët pa gaz.</div>
+      </div>
+      <div class="product-price">100 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Ujë i Gazuar</div>
+        <div class="product-desc">Ujë me gaz për freski të shtuar.</div>
+      </div>
+      <div class="product-price">150 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Lëng Portokalli i Freskët</div>
+        <div class="product-desc">Lëng i shtrydhur natyral, pa sheqerna të shtuara.</div>
+      </div>
+      <div class="product-price">300 lekë</div>
+    </div>
+  </div>
+  <button class="accordion">☕ Kafe & Çaj</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Espresso</div>
+        <div class="product-desc">Kafe klasike italiane me aromë intensive dhe mbarim të gjatë.</div>
+      </div>
+      <div class="product-price">100 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Macchiato</div>
+        <div class="product-desc">Espresso me një pikë qumështi për një shije më të butë.</div>
+      </div>
+      <div class="product-price">120 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Cappuccino</div>
+        <div class="product-desc">Kafe me shkumë të trashë qumështi dhe shije të ëmbël të balancuar.</div>
+      </div>
+      <div class="product-price">150 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Çaj i Zi</div>
+        <div class="product-desc">Çaj klasik me aromë të thellë dhe ton forcues.</div>
+      </div>
+      <div class="product-price">150 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Çaj Jeshil</div>
+        <div class="product-desc">Çaj i freskët me nota natyrale bimore dhe antioksidues.</div>
+      </div>
+      <div class="product-price">150 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">Çaj Bimor</div>
+        <div class="product-desc">Përzgjedhje çajrash natyralë: mente, kamomil, livando.</div>
+      </div>
+      <div class="product-price">150 lekë</div>
+    </div>
+  </div>
+  <button class="accordion">🔥 Speciale të Barit</button>
+  <div class="panel">
+    <div class="product">
+      <div>
+        <div class="product-name">Shot Surprise</div>
+        <div class="product-desc">Mix sekreti i baristit me aromë frutash dhe shije të fuqishme.</div>
+      </div>
+      <div class="product-price">400 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">House Signature Cocktail</div>
+        <div class="product-desc">Kokteil unik i krijuar nga baristët tanë, freski dhe elegancë.</div>
+      </div>
+      <div class="product-price">700 lekë</div>
+    </div>
+  
+    <div class="product">
+      <div>
+        <div class="product-name">B-52 Shot</div>
+        <div class="product-desc">Likere kafe, Baileys dhe Grand Marnier për një ndezje të lehtë.</div>
+      </div>
+      <div class="product-price">500 lekë</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 40px;">
+    <a href="index.html" class="back-button">← Kthehu tek Faqja Kryesore</a>
+  </div>
+
+  <footer>
+    <p>© 2025 Bar Ciao. Të gjitha të drejtat e rezervuara.</p>
+  </footer>
+
+<script>
+const acc = document.getElementsByClassName("accordion");
+for (let i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+      panel.classList.remove('open');
+      const products = panel.querySelectorAll('.product');
+      products.forEach(p => p.classList.remove('show'));
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+      panel.classList.add('open');
+      const products = panel.querySelectorAll('.product');
+      products.forEach((p, index) => {
+        setTimeout(() => {
+          p.classList.add('show');
+        }, index * 100);
+      });
+    }
+  });
+}
+</script>
+
+</body>
+</html>
