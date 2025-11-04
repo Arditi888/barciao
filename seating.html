@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rezervimet – Harta e Ndenjëseve | Bar Ciao</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0D1A40; --bg2:#1E3D75;
+      --panel:#2c3e50; --panel2:#34495e;
+      --text:#ecf0f1; --muted:#bdc3c7; --accent:#f1c40f; --ok:#2ecc71; --warn:#e67e22; --danger:#e74c3c;
+      --seat:#3b82f6; --seat-vip:#a855f7; --seat-held:#f59e0b; --seat-res:#ef4444; --seat-off:#64748b;
+      --grid:#1f2d3a;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins',sans-serif;color:var(--text);
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));}
+    header{padding:24px 16px;text-align:center}
+    h1{margin:0;font-family:'Playfair Display',serif;font-size:34px}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 14px 32px}
+    .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 16px}
+    .button{background:#3D566E;color:var(--text);border:none;border-radius:10px;padding:10px 14px;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .button:hover{background:#48627c;transform:translateY(-1px)}
+    .select,.input{background:#3a5068;border:none;border-radius:10px;padding:10px 12px;color:#fff}
+    .card{background:var(--panel);border-radius:14px;box-shadow:0 8px 18px rgba(0,0,0,.25);padding:14px}
+    .grid-wrap{display:grid;grid-template-columns: 1fr 360px;gap:14px}
+    @media(max-width:1000px){.grid-wrap{grid-template-columns:1fr}}
+    .board{background:var(--panel2);padding:10px;border-radius:12px;overflow:auto}
+    .grid{display:grid;gap:4px;background:var(--grid);padding:6px;border-radius:10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+    .cell{width:30px;height:30px;border-radius:6px;display:grid;place-items:center;font-size:11px;user-select:none;cursor:pointer;transition:.12s;box-shadow:0 1px 0 rgba(0,0,0,.25)}
+    .cell.seat{background:var(--seat)}
+    .cell.vip{background:var(--seat-vip)}
+    .cell.held{background:var(--seat-held)}
+    .cell.res{background:var(--seat-res)}
+    .cell.off{background:var(--seat-off)}
+    .cell.floor{background:#0f172a}
+    .cell.table{background:#0b2b40;border:1px dashed rgba(255,255,255,.18)}
+    .cell.wall{background:#ffffff}
+    .cell.bar{background:#1f2937}
+    .cell.door{background:#065f46}
+    .cell.stage{background:#3f1d1d}
+    .cell.screen{background:#1d243f}
+    .cell:hover{filter:brightness(1.1)}
+    .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:12px}
+    .tag{display:inline-flex;align-items:center;gap:6px;background:#1f2d3a;border-radius:999px;padding:4px 8px}
+    .dot{width:14px;height:14px;border-radius:4px}
+    .hr{height:1px;background:rgba(255,255,255,.08);margin:10px 0}
+    .muted{color:var(--muted)}
+    .title{font-weight:600}
+    .list{max-height:220px;overflow:auto;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:8px}
+    .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .right{margin-left:auto}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#1f2d3a;font-size:12px}
+    .grid-tools .button{padding:8px 10px}
+    .warn{background:var(--warn)} .ok{background:var(--ok)} .danger{background:var(--danger)}
+    .small{font-size:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Harta e Ndenjëseve – Bar Ciao</h1>
+    <p class="muted">Dizajno layout-in si kinema dhe lejo klientët të zgjedhin vendet.</p>
+  </header>
+  <div class="wrap">
+    <div class="bar card">
+      <a href="index.html" class="button">← Faqja</a>
+      <a href="evente.html" class="button">🎉 Evente</a>
+      <select id="eventSelect" class="select">
+        <option value="">(Zgjidh eventin)</option>
+      </select>
+      <button id="loadEventSeats" class="button">Ngarko hartën e eventit</button>
+      <span id="eventInfo" class="pill"></span>
+      <span class="right small muted">PIN admin default: <b>ciao</b></span>
+    </div>
+
+    <div class="grid-wrap">
+      <div class="board card">
+        <div class="row grid-tools">
+          <label class="small">Rreshta</label><input id="rows" type="number" class="input" value="10" min="3" max="40" style="width:90px">
+          <label class="small">Kolona</label><input id="cols" type="number" class="input" value="16" min="3" max="40" style="width:90px">
+          <button id="resize" class="button">Përditëso</button>
+          <div class="hr" style="flex:100%"></div>
+          <label class="small">Mjeti</label>
+          <select id="tool" class="select">
+            <option value="seat">Seat</option>
+            <option value="vip">VIP</option>
+            <option value="off">Off/Joaktiv</option>
+            <option value="table">Tavolinë</option>
+            <option value="floor" selected>Floor</option>
+            <option value="wall">Mur</option>
+            <option value="bar">Banak</option>
+            <option value="door">Derë</option>
+            <option value="stage">Skenë</option>
+            <option value="screen">Ekran</option>
+            <option value="erase">Fshi</option>
+          </select>
+          <button id="toggleAdmin" class="button">🔒 Hyr si Admin</button>
+          <button id="clearSeats" class="button danger">Pastro</button>
+          <button id="mirrorH" class="button">↔︎ Pasqyrë H</button>
+          <button id="mirrorV" class="button">↕︎ Pasqyrë V</button>
+          <button id="export" class="button">Eksporto JSON</button>
+          <label class="button">
+            Importo JSON<input id="import" type="file" accept=".json" style="display:none">
+          </label>
+        </div>
+        <div class="hr"></div>
+        <div id="grid" class="grid"></div>
+        <div class="hr"></div>
+        <div class="legend">
+          <span class="tag"><span class="dot" style="background:var(--seat)"></span> Seat</span>
+          <span class="tag"><span class="dot" style="background:var(--seat-vip)"></span> VIP</span>
+          <span class="tag"><span class="dot" style="background:var(--seat-held)"></span> On hold</span>
+          <span class="tag"><span class="dot" style="background:var(--seat-res)"></span> Rezervuar</span>
+          <span class="tag"><span class="dot" style="background:#0b2b40"></span> Tavolinë</span>
+          <span class="tag"><span class="dot" style="background:#ffffff"></span> Mur</span>
+          <span class="tag"><span class="dot" style="background:#1f2937"></span> Banak</span>
+          <span class="tag"><span class="dot" style="background:#065f46"></span> Derë</span>
+          <span class="tag"><span class="dot" style="background:#3f1d1d"></span> Skenë</span>
+          <span class="tag"><span class="dot" style="background:#1d243f"></span> Ekran</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="title">Rezervim i shpejtë</div>
+          <span class="right pill" id="modeBadge">Mysafir</span>
+        </div>
+        <div class="hr"></div>
+        <div class="row">
+          <label>Emri</label><input id="custName" class="input" placeholder="Emër Mbiemër" style="flex:1">
+        </div>
+        <div class="row">
+          <label>Tel/WhatsApp</label><input id="custPhone" class="input" placeholder="+355 ...">
+        </div>
+        <div class="row">
+          <label>Nr. persona</label><input id="custCount" type="number" class="input" value="2" min="1" max="20" style="width:100px">
+          <label>Maks/rez.</label><input id="maxPerBooking" type="number" class="input" value="6" min="1" max="20" style="width:100px">
+        </div>
+        <div class="hr"></div>
+        <div class="list" id="selList"></div>
+        <div class="row" style="margin-top:8px">
+          <button id="holdBtn" class="button warn">Mbaj 10 min</button>
+          <button id="reserveBtn" class="button ok">Konfirmo Rezervimin</button>
+          <button id="releaseBtn" class="button danger">Liro të zgjedhurat</button>
+        </div>
+        <div class="hr"></div>
+        <div class="small muted">
+          * “Mbaj” (hold) bllokon vendet për 10 minuta që të mos i marrë dikush tjetër (vetëm në këtë pajisje).<br/>
+          * Admin mund të shënojë vende si “rezervuar” ose “joaktiv”.
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+// ------- Basics -------
+const $ = s=>document.querySelector(s);
+const $$ = s=>Array.from(document.querySelectorAll(s));
+const KEY_LAYOUT = id=>`barciao_seating_layout_${id}`;
+const KEY_STATE = id=>`barciao_seating_state_${id}`;
+const PIN = 'ciao';
+
+let admin = false;
+let dragging = false;
+let eventId = '';
+let gridData = {rows:10, cols:16, cells:[]}; // cells: [{t:'floor'|'seat'|'vip'|'table'|... , label?:string}]
+let state = { // seat states per cell index
+  res: {}, // index -> {name, phone, count, atISO}
+  held: {}, // index -> expiresAt
+};
+
+// ------- Event list (from events.json, localStorage, or default) -------
+async function loadEvents(){
+  let list = [];
+  try{
+    const r = await fetch('events.json',{cache:'no-store'});
+    if(r.ok){ list = await r.json(); }
+  }catch(e){}
+  if(!Array.isArray(list) || !list.length){
+    try{
+      const raw = localStorage.getItem('barciao_events');
+      const arr = raw? JSON.parse(raw):[];
+      if(Array.isArray(arr)) list = arr;
+    }catch(e){}
+  }
+  if(!Array.isArray(list) || !list.length){
+    list = [{
+      id:'sample', title:'Demo Event', startISO:new Date().toISOString(), published:true
+    }];
+  }
+  // only show future/published
+  const filtered = list.filter(e=> (e.published!==false) ).sort((a,b)=>new Date(a.startISO)-new Date(b.startISO));
+  const sel = $('#eventSelect');
+  sel.innerHTML = `<option value="">(Zgjidh eventin)</option>` + filtered.map(e=>`<option value="${e.id}">${e.title}</option>`).join('');
+}
+
+function useEvent(id){
+  eventId = id;
+  $('#eventInfo').textContent = id? `Event: ${id}`:'';
+  loadLayout();
+  renderGrid();
+  renderSelected();
+}
+
+// ------- Grid build/render -------
+function ensureCells(){
+  const need = gridData.rows * gridData.cols;
+  if(gridData.cells.length !== need){
+    const old = gridData.cells.slice();
+    gridData.cells = Array.from({length:need}, (_,i)=> old[i] || {t:'floor'});
+  }
+}
+function idx(r,c){ return r*gridData.cols + c; }
+
+function renderGrid(){
+  ensureCells();
+  const grid = $('#grid');
+  grid.style.gridTemplateColumns = `repeat(${gridData.cols}, 30px)`;
+  grid.innerHTML = '';
+  gridData.cells.forEach((cell, i)=>{
+    const div = document.createElement('div');
+    div.className = `cell ${cell.t || 'floor'}`;
+    div.dataset.i = i;
+    div.title = cell.label || '';
+    div.textContent = (cell.t==='seat'||cell.t==='vip') ? (cell.label||'') : '';
+    // apply state
+    if(state.held[i] && state.held[i] > Date.now()) div.classList.add('held');
+    if(state.res[i]) div.classList.add('res');
+
+    div.addEventListener('mousedown', e=>{
+      dragging = true;
+      onCellClick(i, e);
+    });
+    div.addEventListener('mouseover', e=>{
+      if(dragging) onCellClick(i, e, true);
+    });
+    div.addEventListener('mouseup', ()=> dragging=false);
+    grid.appendChild(div);
+  });
+  document.addEventListener('mouseup', ()=> dragging=false);
+}
+
+function onCellClick(i, e, isDrag=false){
+  const tool = $('#tool').value;
+  const c = gridData.cells[i];
+  if(admin){
+    if(tool==='erase'){ gridData.cells[i] = {t:'floor'}; }
+    else if(['seat','vip','off','table','floor','wall','bar','door','stage','screen'].includes(tool)){
+      gridData.cells[i] = {t:tool};
+      if(tool==='seat' || tool==='vip'){
+        // auto label seats incremental per row
+        gridData.cells[i].label = gridData.cells[i].label || seatAutoLabel(i);
+      }
+    }
+    saveLayout();
+    renderGrid();
+    return;
+  }
+  // guest mode: toggle select seats (only seat/vip and not reserved/off)
+  if(c.t==='seat' || c.t==='vip'){
+    if(state.res[i]) return; // occupied
+    // toggle held
+    if(state.held[i] && state.held[i] > Date.now()){
+      delete state.held[i];
+    }else{
+      state.held[i] = Date.now() + 10*60*1000; // 10 min hold
+    }
+    saveState();
+    renderGrid();
+    renderSelected();
+  }
+}
+
+function seatAutoLabel(i){
+  const r = Math.floor(i / gridData.cols);
+  const c = i % gridData.cols;
+  const letter = String.fromCharCode(65 + r); // A,B,C...
+  return letter + (c+1);
+}
+
+// ------- Layout/state persistence -------
+function loadLayout(){
+  if(!eventId) return;
+  try{
+    const raw = localStorage.getItem(KEY_LAYOUT(eventId));
+    if(raw){
+      gridData = JSON.parse(raw);
+    }else{
+      gridData = {rows: parseInt($('#rows').value)||10, cols: parseInt($('#cols').value)||16, cells: []};
+    }
+  }catch(e){
+    gridData = {rows:10, cols:16, cells:[]};
+  }
+  $('#rows').value = gridData.rows;
+  $('#cols').value = gridData.cols;
+
+  try{
+    const sraw = localStorage.getItem(KEY_STATE(eventId));
+    state = sraw? JSON.parse(sraw) : {res:{},held:{}};
+  }catch(e){
+    state = {res:{},held:{}};
+  }
+  cleanupHolds();
+}
+function saveLayout(){
+  if(!eventId) return alert('Zgjidh eventin së pari.');
+  localStorage.setItem(KEY_LAYOUT(eventId), JSON.stringify(gridData));
+}
+function saveState(){
+  if(!eventId) return;
+  localStorage.setItem(KEY_STATE(eventId), JSON.stringify(state));
+}
+
+// ------- Booking panel -------
+function cleanupHolds(){
+  const now = Date.now();
+  for(const k of Object.keys(state.held)){
+    if(state.held[k] <= now) delete state.held[k];
+  }
+}
+function selectedSeats(){
+  cleanupHolds();
+  return Object.keys(state.held).filter(i=>{
+    const cell = gridData.cells[+i];
+    return (cell && (cell.t==='seat'||cell.t==='vip') && !state.res[i]);
+  }).map(i=>+i);
+}
+function renderSelected(){
+  const box = $('#selList');
+  const sel = selectedSeats();
+  if(sel.length===0){
+    box.innerHTML = `<div class="muted small">Nuk keni zgjedhur asnjë vend.</div>`;
+    return;
+  }
+  const items = sel.map(i=>{
+    const cell = gridData.cells[i];
+    const remain = Math.max(0, Math.floor((state.held[i]-Date.now())/1000));
+    const m = Math.floor(remain/60), s = remain%60;
+    return `<div class="row small">
+      <span class="pill">${cell.label||('#'+i)}</span>
+      <span class="muted">(${m}:${String(s).padStart(2,'0')})</span>
+      <button class="button danger" data-release="${i}">Liro</button>
+    </div>`;
+  }).join('');
+  box.innerHTML = items;
+  $$('#selList [data-release]').forEach(b=> b.addEventListener('click',()=>{
+    const i = +b.getAttribute('data-release');
+    delete state.held[i]; saveState(); renderGrid(); renderSelected();
+  }));
+}
+
+$('#holdBtn').addEventListener('click', ()=>{
+  // already held by clicking; extend holds
+  const sel = selectedSeats();
+  if(sel.length===0){ alert('Zgjidh fillimisht vendet në hartë.'); return; }
+  sel.forEach(i=> state.held[i] = Date.now() + 10*60*1000);
+  saveState(); renderGrid(); renderSelected();
+});
+
+$('#reserveBtn').addEventListener('click', ()=>{
+  const name = $('#custName').value.trim();
+  const phone = $('#custPhone').value.trim();
+  const count = parseInt($('#custCount').value)||1;
+  const max = parseInt($('#maxPerBooking').value)||6;
+  const sel = selectedSeats();
+  if(!name || !phone){ alert('Emri dhe telefoni janë të detyrueshëm.'); return; }
+  if(sel.length===0){ alert('Zgjidh të paktën një vend.'); return; }
+  if(sel.length > max){ alert('Ke kaluar numrin maksimal për rezervim.'); return; }
+  sel.forEach(i=>{
+    state.res[i] = {name, phone, count, atISO: new Date().toISOString()};
+    delete state.held[i];
+  });
+  saveState(); renderGrid(); renderSelected();
+  alert('Rezervimi u konfirmua.');
+});
+
+$('#releaseBtn').addEventListener('click', ()=>{
+  const sel = selectedSeats();
+  if(sel.length===0){ alert('Asgjë për të liruar.'); return; }
+  sel.forEach(i=> delete state.held[i]);
+  saveState(); renderGrid(); renderSelected();
+});
+
+// ------- Admin gate & tools -------
+$('#toggleAdmin').addEventListener('click', ()=>{
+  if(admin){ admin=false; $('#modeBadge').textContent='Mysafir'; return; }
+  const p = prompt('Vendos PIN:');
+  if(p===PIN){ admin=true; $('#modeBadge').textContent='Admin'; }
+  else alert('PIN gabim');
+});
+
+$('#resize').addEventListener('click', ()=>{
+  gridData.rows = Math.max(3, Math.min(40, parseInt($('#rows').value)||10));
+  gridData.cols = Math.max(3, Math.min(40, parseInt($('#cols').value)||16));
+  ensureCells(); saveLayout(); renderGrid();
+});
+
+$('#clearSeats').addEventListener('click', ()=>{
+  if(!admin) return alert('Vetëm për Admin.');
+  if(confirm('Pastro gjithë hartën dhe rezervimet?')){
+    gridData = {rows:gridData.rows, cols:gridData.cols, cells: Array.from({length:gridData.rows*gridData.cols}, ()=>({t:'floor'}))};
+    state = {res:{},held:{}};
+    saveLayout(); saveState(); renderGrid(); renderSelected();
+  }
+});
+
+$('#mirrorH').addEventListener('click', ()=>{
+  // horizontal mirror (flip columns)
+  const r = gridData.rows, c = gridData.cols;
+  const newCells = Array.from({length:r*c}, ()=>({t:'floor'}));
+  for(let rr=0; rr<r; rr++){
+    for(let cc=0; cc<c; cc++){
+      newCells[idx(rr, c-1-cc)] = gridData.cells[idx(rr, cc)];
+    }
+  }
+  gridData.cells = newCells; saveLayout(); renderGrid();
+});
+$('#mirrorV').addEventListener('click', ()=>{
+  // vertical mirror (flip rows)
+  const r = gridData.rows, c = gridData.cols;
+  const newCells = Array.from({length:r*c}, ()=>({t:'floor'}));
+  for(let rr=0; rr<r; rr++){
+    for(let cc=0; cc<c; cc++){
+      newCells[idx(r-1-rr, cc)] = gridData.cells[idx(rr, cc)];
+    }
+  }
+  gridData.cells = newCells; saveLayout(); renderGrid();
+});
+
+$('#export').addEventListener('click', ()=>{
+  const payload = {eventId, gridData, state};
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download=`seating_${eventId||'layout'}.json`; a.click();
+  URL.revokeObjectURL(url);
+});
+$('#import').addEventListener('change', e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const fr = new FileReader();
+  fr.onload = ()=>{
+    try{
+      const data = JSON.parse(fr.result);
+      if(data.gridData){ gridData = data.gridData; }
+      if(data.state){ state = data.state; }
+      saveLayout(); saveState(); renderGrid(); renderSelected();
+    }catch(err){ alert('Import dështoi: '+err.message); }
+  };
+  fr.readAsText(f);
+});
+
+$('#loadEventSeats').addEventListener('click', ()=>{
+  const id = $('#eventSelect').value;
+  if(!id){ alert('Zgjidh një event.'); return; }
+  useEvent(id);
+});
+
+// ------- init -------
+loadEvents().then(()=>{
+  // auto pick first
+  const first = $('#eventSelect').querySelector('option:nth-child(2)');
+  if(first){ $('#eventSelect').value = first.value; useEvent(first.value); }
+});
+</script>
+</body>
+</html>

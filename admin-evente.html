@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evente – Admin | Bar Ciao</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0D1A40; --bg2:#1E3D75;
+      --card:#34495e; --card2:#2c3e50;
+      --text:#ecf0f1; --muted:#bdc3c7; --accent:#f1c40f;
+      --ok:#2ecc71; --warn:#e67e22; --danger:#e74c3c; --btn:#3D566E; --btn2:#48627c;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins',sans-serif;color:var(--text);
+      background:linear-gradient(135deg,var(--bg1),var(--bg2))}
+    header{padding:26px 18px 8px;text-align:center}
+    h1{margin:0;font-family:'Playfair Display',serif;font-size:36px}
+    .wrap{max-width:1100px;margin:14px auto 40px;padding:0 16px}
+    .gate{max-width:420px;margin:40px auto;background:var(--card2);padding:18px;border-radius:12px;box-shadow:0 10px 20px rgba(0,0,0,.25);text-align:center}
+    .gate input{width:100%;padding:12px;border-radius:10px;border:none;background:#3a5068;color:var(--text);margin-top:10px}
+    .gate button{margin-top:10px}
+
+    .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+    .bar .button,.button{background:var(--btn);color:var(--text);border:none;border-radius:10px;padding:10px 14px;cursor:pointer;transition:.2s;text-decoration:none;display:inline-block}
+    .button:hover{background:var(--btn2);transform:translateY(-1px)}
+    .ok{background:var(--ok)} .warn{background:var(--warn)} .danger{background:var(--danger)}
+    .card{background:var(--card2);padding:16px;border-radius:12px;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:980px){.grid{grid-template-columns: 1.2fr .8fr}}
+
+    label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
+    input[type="text"], input[type="password"], input[type="datetime-local"], textarea, select{
+      width:100%;padding:12px;border-radius:10px;border:none;background:#3a5068;color:var(--text);
+      margin-bottom:10px
+    }
+    textarea{min-height:110px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .flags{display:flex;gap:12px;align-items:center}
+    .flags label{display:flex;gap:6px;align-items:center;margin:4px 0;color:#e0e0e0}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;font-size:14px}
+    th{color:#dfe6e9}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#1f2d3a;font-size:12px}
+    .muted{color:var(--muted)}
+    .right{margin-left:auto}
+    .hint{font-size:12px;color:var(--muted);margin-top:-6px;margin-bottom:10px}
+    .linkbar{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+    .small{font-size:12px}
+    .hidden{display:none !important}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin i Eventeve – Bar Ciao</h1>
+    <p class="muted">Krijo, edito, publiko dhe sinkronizo me GitHub (events.json). Ruhet edhe në shfletuesin tënd.</p>
+  </header>
+
+  <!-- Simple PIN gate -->
+  <div class="wrap" id="gateWrap">
+    <div class="gate card">
+      <h3>Hyrje</h3>
+      <p class="muted small">PIN default: <b>ciao</b></p>
+      <input id="pinInput" type="password" placeholder="PIN" />
+      <button class="button" id="pinBtn">Hyj</button>
+    </div>
+  </div>
+
+  <div class="wrap hidden" id="app">
+    <div class="bar">
+      <a href="index.html" class="button">← Faqja</a>
+      <a href="evente.html" class="button">🎉 Shiko Eventet Publike</a>
+      <button class="button ok" id="newBtn">+ Event i ri</button>
+      <button class="button warn" id="exportBtn">Eksporto JSON</button>
+      <label class="button">
+        Importo JSON
+        <input type="file" id="importFile" accept=".json" style="display:none">
+      </label>
+      <input id="search" type="text" placeholder="Kërko…" style="flex:1;max-width:380px;background:#3a5068;color:#fff;border:none;padding:10px 12px;border-radius:10px">
+      <select id="filterCat" style="background:#3a5068;color:#fff;border:none;padding:10px 12px;border-radius:10px">
+        <option value="">Të gjitha</option>
+        <option value="sport">⚽ Sport</option>
+        <option value="muzike">🎵 Muzikë</option>
+        <option value="speciale">🍷 Speciale</option>
+      </select>
+      <label class="button small"><input type="checkbox" id="onlyPublished"> Vetëm të publikuara</label>
+      <label class="button small"><input type="checkbox" id="onlyUpcoming" checked> Vetëm të ardhshme</label>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3 id="formTitle">Event i ri</h3>
+        <div class="row">
+          <div>
+            <label>Titulli</label>
+            <input id="title" type="text" placeholder="p.sh. Juventus vs Dortmund">
+          </div>
+          <div>
+            <label>Kategoria</label>
+            <select id="category">
+              <option value="sport">⚽ Sport</option>
+              <option value="muzike">🎵 Muzikë</option>
+              <option value="speciale">🍷 Speciale</option>
+            </select>
+          </div>
+        </div>
+
+        <label>Përshkrimi</label>
+        <textarea id="desc" placeholder="Detaje, oferta, etj."></textarea>
+
+        <div class="row">
+          <div>
+            <label>Vendi</label>
+            <input id="location" type="text" placeholder="Bar Ciao, Rruga …">
+          </div>
+          <div>
+            <label>Çmimi (opsionale)</label>
+            <input id="price" type="text" placeholder="1200 lekë / hyrja falas">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Nis (lokale)</label>
+            <input id="start" type="datetime-local">
+            <div class="hint">Ruajmë ISO (UTC), shfaqet me zonën tënde.</div>
+          </div>
+          <div>
+            <label>Mbaron (lokale)</label>
+            <input id="end" type="datetime-local">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Foto/Poster URL (opsionale)</label>
+            <input id="image" type="text" placeholder="https://...jpg">
+          </div>
+          <div>
+            <label>ID (auto)</label>
+            <input id="slug" type="text" placeholder="auto" disabled>
+          </div>
+        </div>
+
+        <div class="flags">
+          <label><input id="published" type="checkbox"> Publiko</label>
+          <label><input id="featured" type="checkbox"> Featured</label>
+        </div>
+
+        <div class="bar" style="margin-top:12px">
+          <button class="button ok" id="saveBtn">Ruaj</button>
+          <button class="button" id="dupBtn">Dupliko</button>
+          <button class="button danger" id="deleteBtn">Fshi</button>
+          <span class="muted right" id="meta"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Lista e Eventeve</h3>
+        <div style="max-height:420px;overflow:auto">
+          <table id="tbl">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Titulli</th>
+                <th>Kat.</th>
+                <th>Vendi</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <div class="linkbar">
+          <button class="button" id="clearPastBtn">Fshi të kaluara</button>
+          <button class="button" id="unpubAllBtn">Ç-publiko të gjitha</button>
+        </div>
+
+        <hr style="border-color:rgba(255,255,255,.12);margin:16px 0">
+        <h3>GitHub Sync (events.json)</h3>
+        <div class="row">
+          <div>
+            <label>Repo Owner (p.sh. Arditi888)</label>
+            <input id="ghOwner" type="text" placeholder="owner">
+          </div>
+          <div>
+            <label>Repo Name (p.sh. barciao)</label>
+            <input id="ghRepo" type="text" placeholder="repo">
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Base Branch</label>
+            <input id="ghBase" type="text" value="main">
+          </div>
+          <div>
+            <label>File Path</label>
+            <input id="ghPath" type="text" value="events.json">
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>GitHub Token (scopes: repo)</label>
+            <input id="ghToken" type="password" placeholder="ghp_...">
+          </div>
+          <div>
+            <label class="small"><input type="checkbox" id="rememberToken"> Ruaj token lokalisht (rrezik i moderuar)</label>
+            <div class="hint">Token ruhet në localStorage të këtij shfletuesi.</div>
+          </div>
+        </div>
+        <div class="bar">
+          <button class="button" id="ghPullBtn">⬇️ Ngarko nga repo (lexo)</button>
+          <button class="button ok" id="ghPushBtn">⬆️ Krijo PR me events.json</button>
+          <span id="ghStatus" class="muted"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Storage helpers ----------
+    const KEY = 'barciao_events';
+    const PIN = (localStorage.getItem('barciao_pin') || 'ciao');
+
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    const uid = () => Math.random().toString(36).slice(2,10);
+    const slugify = s => s.toLowerCase()
+      .replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')
+      .slice(0,60) + '-' + uid();
+
+    function load(){
+      try{
+        const raw = localStorage.getItem(KEY);
+        return raw ? JSON.parse(raw) : [];
+      }catch(e){ console.warn('parse error',e); return []; }
+    }
+    function save(list){
+      localStorage.setItem(KEY, JSON.stringify(list));
+    }
+    function nowISO(){ return new Date().toISOString(); }
+    function toLocalInput(iso){
+      if(!iso) return '';
+      const d = new Date(iso);
+      const pad = n=>String(n).padStart(2,'0');
+      const yyyy=d.getFullYear(), mm=pad(d.getMonth()+1), dd=pad(d.getDate());
+      const hh=pad(d.getHours()), mi=pad(d.getMinutes());
+      return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+    }
+    function fromLocalInput(val){
+      const d = new Date(val);
+      return d.toISOString();
+    }
+    function isUpcoming(ev){ return new Date(ev.endISO || ev.startISO).getTime() >= Date.now(); }
+
+    // ---------- State ----------
+    let events = load().map(e => ({...e})).sort((a,b)=>new Date(a.startISO)-new Date(b.startISO));
+    let current = null;
+
+    // ---------- Gate ----------
+    $('#pinBtn').addEventListener('click', ()=>{
+      const p = $('#pinInput').value.trim();
+      if(p === PIN){
+        $('#gateWrap').classList.add('hidden');
+        $('#app').classList.remove('hidden');
+        renderTable();
+        // Load GH settings
+        $('#ghOwner').value = localStorage.getItem('gh_owner') || '';
+        $('#ghRepo').value = localStorage.getItem('gh_repo') || '';
+        $('#ghBase').value = localStorage.getItem('gh_base') || 'main';
+        $('#ghPath').value = localStorage.getItem('gh_path') || 'events.json';
+        const savedToken = localStorage.getItem('gh_token');
+        if(savedToken){ $('#ghToken').value = savedToken; $('#rememberToken').checked = true; }
+      }else{
+        alert('PIN i gabuar.');
+      }
+    });
+
+    function rowHTML(e){
+      const d = new Date(e.startISO);
+      const dateTxt = d.toLocaleString('sq-AL',{weekday:'short', day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'}).replace(/\\./g,'');
+      return `<tr data-id="${e.id}">
+        <td class="muted">${dateTxt}</td>
+        <td>${e.title}</td>
+        <td><span class="pill">${e.category}</span></td>
+        <td class="muted">${e.location||''}</td>
+        <td>${e.published? '✅':'❌'}</td>
+      </tr>`;
+    }
+
+    function applyFilters(list){
+      const q = $('#search').value.trim().toLowerCase();
+      const cat = $('#filterCat').value;
+      const onlyPub = $('#onlyPublished').checked;
+      const onlyUp = $('#onlyUpcoming').checked;
+
+      return list.filter(e=>{
+        if(cat && e.category !== cat) return false;
+        if(onlyPub && !e.published) return false;
+        if(onlyUp && !isUpcoming(e)) return false;
+        if(!q) return true;
+        return (e.title + ' ' + (e.desc||'') + ' ' + (e.location||'') + ' ' + (e.price||''))
+          .toLowerCase().includes(q);
+      }).sort((a,b)=> new Date(a.startISO)-new Date(b.startISO));
+    }
+
+    function renderTable(){
+      const filtered = applyFilters(events);
+      $('#tbody').innerHTML = filtered.map(rowHTML).join('') || `<tr><td colspan="5" class="muted">S'ka asgjë.</td></tr>`;
+      $$('#tbody tr').forEach(tr=>{
+        tr.addEventListener('click', ()=>{
+          const id = tr.getAttribute('data-id');
+          const e = events.find(x=>x.id===id);
+          loadToForm(e);
+        });
+      });
+    }
+
+    // ---------- Form ----------
+    function clearForm(){
+      current = null;
+      $('#formTitle').textContent = 'Event i ri';
+      $('#title').value = '';
+      $('#desc').value = '';
+      $('#location').value = '';
+      $('#price').value = '';
+      $('#category').value = 'sport';
+      $('#start').value = '';
+      $('#end').value = '';
+      $('#image').value = '';
+      $('#published').checked = true;
+      $('#featured').checked = false;
+      $('#slug').value = '';
+      $('#meta').textContent = '';
+    }
+
+    function loadToForm(e){
+      current = e;
+      $('#formTitle').textContent = 'Edito: ' + e.title;
+      $('#title').value = e.title || '';
+      $('#desc').value = e.desc || '';
+      $('#location').value = e.location || '';
+      $('#price').value = e.price || '';
+      $('#category').value = e.category || 'sport';
+      $('#start').value = toLocalInput(e.startISO);
+      $('#end').value = toLocalInput(e.endISO);
+      $('#image').value = e.image || '';
+      $('#published').checked = !!e.published;
+      $('#featured').checked = !!e.featured;
+      $('#slug').value = e.id;
+      $('#meta').textContent = `Krijuar: ${new Date(e.createdAt).toLocaleString()} • Përditësuar: ${new Date(e.updatedAt).toLocaleString()}`;
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function readFromForm(){
+      const title = $('#title').value.trim();
+      const startVal = $('#start').value;
+      const endVal = $('#end').value;
+      if(!title) throw new Error('Titulli është i detyrueshëm.');
+      if(!startVal) throw new Error('Data e nisjes është e detyrueshme.');
+
+      let endISO = endVal ? fromLocalInput(endVal) : null;
+      const startISO = fromLocalInput(startVal);
+      if(!endISO){
+        endISO = new Date(new Date(startISO).getTime() + 2*3600*1000).toISOString();
+      }
+      if(new Date(endISO) <= new Date(startISO)) throw new Error('Mbarimi duhet të jetë pas nisjes.');
+
+      const base = {
+        title,
+        desc: $('#desc').value.trim(),
+        location: $('#location').value.trim(),
+        price: $('#price').value.trim(),
+        category: $('#category').value,
+        startISO, endISO,
+        image: $('#image').value.trim(),
+        published: $('#published').checked,
+        featured: $('#featured').checked
+      };
+      if(current){
+        return {...current, ...base, updatedAt: nowISO()};
+      }else{
+        return {
+          id: slugify(title),
+          ...base,
+          createdAt: nowISO(),
+          updatedAt: nowISO()
+        };
+      }
+    }
+
+    // ---------- Actions ----------
+    $('#newBtn').addEventListener('click', clearForm);
+
+    $('#saveBtn').addEventListener('click', ()=>{
+      try{
+        const data = readFromForm();
+        const idx = events.findIndex(e=>e.id===data.id);
+        if(idx>=0){ events[idx] = data; } else { events.push(data); }
+        events.sort((a,b)=> new Date(a.startISO)-new Date(b.startISO));
+        save(events);
+        renderTable();
+        loadToForm(data);
+        alert('U ruajt.');
+      }catch(err){ alert(err.message); }
+    });
+
+    $('#deleteBtn').addEventListener('click', ()=>{
+      if(!current) { alert('Asgjë për të fshirë.'); return; }
+      if(confirm('Je i sigurt?')){
+        events = events.filter(e=>e.id!==current.id);
+        save(events); renderTable(); clearForm();
+      }
+    });
+
+    $('#dupBtn').addEventListener('click', ()=>{
+      if(!current){ alert('Zgjidh një event.'); return; }
+      const copy = {...current};
+      copy.id = slugify(current.title + ' copy');
+      copy.published = false;
+      copy.createdAt = nowISO(); copy.updatedAt = nowISO();
+      events.push(copy); save(events); renderTable(); loadToForm(copy);
+    });
+
+    $('#exportBtn').addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(events,null,2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'barciao_events.json';
+      a.click(); URL.revokeObjectURL(url);
+    });
+
+    $('#importFile').addEventListener('change', (e)=>{
+      const file = e.target.files[0]; if(!file) return;
+      const fr = new FileReader();
+      fr.onload = () => {
+        try{
+          const data = JSON.parse(fr.result);
+          if(!Array.isArray(data)) throw new Error('Formati i gabuar');
+          const norm = data.map(x => ({
+            id: x.id || slugify(x.title||'event'),
+            title: x.title||'',
+            desc: x.desc||'',
+            location: x.location||'',
+            price: x.price||'',
+            category: x.category||'speciale',
+            startISO: x.startISO || new Date().toISOString(),
+            endISO: x.endISO || new Date(Date.now()+7200000).toISOString(),
+            image: x.image||'',
+            published: !!x.published,
+            featured: !!x.featured,
+            createdAt: x.createdAt || nowISO(),
+            updatedAt: nowISO()
+          }));
+          events = norm.sort((a,b)=> new Date(a.startISO)-new Date(b.startISO));
+          save(events); renderTable(); clearForm();
+          alert('Import i suksesshëm.');
+        }catch(err){ alert('Import dështoi: '+err.message); }
+      };
+      fr.readAsText(file);
+    });
+
+    $('#search').addEventListener('input', renderTable);
+    $('#filterCat').addEventListener('change', renderTable);
+    $('#onlyPublished').addEventListener('change', renderTable);
+    $('#onlyUpcoming').addEventListener('change', renderTable);
+
+    $('#clearPastBtn').addEventListener('click', ()=>{
+      if(!confirm('Fshij të gjitha eventet e kaluara?')) return;
+      events = events.filter(e => new Date(e.endISO||e.startISO) >= new Date());
+      save(events); renderTable(); clearForm();
+    });
+
+    $('#unpubAllBtn').addEventListener('click', ()=>{
+      if(!confirm('Ç-publiko të gjitha eventet?')) return;
+      events = events.map(e=>({...e, published:false, updatedAt: nowISO()}));
+      save(events); renderTable(); if(current){ loadToForm(events.find(x=>x.id===current.id) || null); }
+    });
+
+    // ---------- GitHub helpers ----------
+    function setStatus(msg){ $('#ghStatus').textContent = msg; }
+    function saveGhSettings(){
+      localStorage.setItem('gh_owner', $('#ghOwner').value.trim());
+      localStorage.setItem('gh_repo', $('#ghRepo').value.trim());
+      localStorage.setItem('gh_base', $('#ghBase').value.trim());
+      localStorage.setItem('gh_path', $('#ghPath').value.trim());
+      const t = $('#ghToken').value.trim();
+      if($('#rememberToken').checked){ localStorage.setItem('gh_token', t); } else { localStorage.removeItem('gh_token'); }
+    }
+    async function ghFetch(url, method='GET', body=null, token=''){
+      const headers = {'Accept':'application/vnd.github+json'};
+      if(token) headers['Authorization'] = 'Bearer ' + token;
+      if(body) headers['Content-Type']='application/json';
+      const res = await fetch(url, {method, headers, body: body?JSON.stringify(body):null});
+      if(!res.ok){ throw new Error(`${res.status} ${res.statusText}`); }
+      return res.json();
+    }
+    function b64(str){
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    async function ghGetRef(owner, repo, branch, token){
+      return ghFetch(`https://api.github.com/repos/${owner}/${repo}/git/ref/heads/${branch}`,'GET',null,token);
+    }
+    async function ghGetFile(owner, repo, path, ref, token){
+      return ghFetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(ref)}`,'GET',null,token);
+    }
+    async function ghCreateRef(owner, repo, newBranch, sha, token){
+      return ghFetch(`https://api.github.com/repos/${owner}/${repo}/git/refs`,'POST',{ref:`refs/heads/${newBranch}`, sha},token);
+    }
+    async function ghPutContent(owner, repo, path, message, contentB64, branch, sha, token){
+      return ghFetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`,'PUT',{
+        message, content: contentB64, branch, sha
+      }, token);
+    }
+    async function ghCreatePR(owner, repo, title, head, base, token){
+      return ghFetch(`https://api.github.com/repos/${owner}/${repo}/pulls`,'POST',{
+        title, head, base, body: 'Auto-created by Bar Ciao Admin (events.json sync).'
+      }, token);
+    }
+
+    // Pull from repo -> load into admin (does NOT auto-save to localStorage unless confirmed)
+    $('#ghPullBtn').addEventListener('click', async ()=>{
+      try{
+        saveGhSettings();
+        const owner = $('#ghOwner').value.trim();
+        const repo = $('#ghRepo').value.trim();
+        const base = $('#ghBase').value.trim() || 'main';
+        const path = $('#ghPath').value.trim() || 'events.json';
+        const token = $('#ghToken').value.trim();
+        if(!owner || !repo){ alert('Vendos owner dhe repo.'); return; }
+        setStatus('Duke lexuar events.json…');
+        const ref = await ghGetRef(owner, repo, base, token);
+        const file = await ghGetFile(owner, repo, path, base, token);
+        const json = JSON.parse(decodeURIComponent(escape(atob(file.content))));
+        if(!Array.isArray(json)) throw new Error('events.json nuk është array');
+        if(confirm('Zëvendëso listën lokale me atë nga repo?')){
+          events = json;
+          save(events); renderTable(); clearForm();
+        }
+        setStatus('U ngarkua nga repo.');
+      }catch(err){
+        setStatus('Gabim: '+err.message);
+      }
+    });
+
+    // Push via PR
+    $('#ghPushBtn').addEventListener('click', async ()=>{
+      try{
+        saveGhSettings();
+        const owner = $('#ghOwner').value.trim();
+        const repo = $('#ghRepo').value.trim();
+        const base = $('#ghBase').value.trim() || 'main';
+        const path = $('#ghPath').value.trim() || 'events.json';
+        const token = $('#ghToken').value.trim();
+        if(!owner || !repo || !token){ alert('Owner, repo dhe token janë të detyrueshme.'); return; }
+
+        setStatus('Duke përgatitur PR…');
+        const ref = await ghGetRef(owner, repo, base, token);
+        const baseSha = ref.object.sha;
+        const branchName = `events-sync-${new Date().toISOString().slice(0,10)}`;
+
+        // create branch (ignore if exists)
+        try{ await ghCreateRef(owner, repo, branchName, baseSha, token); }catch(e){ /* maybe exists */ }
+
+        // get existing file on branch for sha (optional)
+        let sha = undefined;
+        try{
+          const existing = await ghGetFile(owner, repo, path, branchName, token);
+          sha = existing.sha;
+        }catch(e){ /* new file */ }
+
+        const contentB64 = b64(JSON.stringify(events, null, 2));
+        await ghPutContent(owner, repo, path, `chore: update events.json (${new Date().toISOString()})`, contentB64, branchName, sha, token);
+        const pr = await ghCreatePR(owner, repo, 'Update events.json (Bar Ciao Admin)', branchName, base, token);
+        setStatus('PR u krijua: #' + pr.number);
+        alert('Pull Request u krijua me sukses. Kontrollo në GitHub.');
+      }catch(err){
+        setStatus('Gabim: '+err.message);
+        alert('Dështoi: '+err.message);
+      }
+    });
+  </script>
+</body>
+</html>
