@@ -1,0 +1,13 @@
+{
+  "name": "Bar Ciao",
+  "short_name": "CIAO",
+  "description": "Bar Ciao — kafe, pije dhe evente në Tiranë.",
+  "start_url": "/barciao/#/menu",
+  "scope": "/barciao/",
+  "display": "standalone",
+  "background_color": "#0a0a0b",
+  "theme_color": "#0a0a0b",
+  "icons": [
+    { "src": "/barciao/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

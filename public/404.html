@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="sq">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Bar Ciao</title>
+    <style>
+      html { background: #0a0a0b; }
+    </style>
+    <script>
+      /*
+        GitHub Pages serves this file for any path it does not recognise.
+        The site uses hash routing, so a bare link such as
+          user.github.io/bar-ciao/menu
+        is rewritten to
+          user.github.io/bar-ciao/#/menu
+        and React Router takes it from there.
+
+        SEGMENTS_TO_KEEP = 1  -> project page  (user.github.io/repo-name/)
+        SEGMENTS_TO_KEEP = 0  -> custom domain or user page (example.com/)
+      */
+      var SEGMENTS_TO_KEEP = 1;
+
+      (function redirectToHashRoute() {
+        var location = window.location;
+        var segments = location.pathname.split('/').filter(Boolean);
+
+        var base = '/' + segments.slice(0, SEGMENTS_TO_KEEP).join('/');
+        if (base.slice(-1) !== '/') base += '/';
+
+        var route = '/' + segments.slice(SEGMENTS_TO_KEEP).join('/');
+
+        location.replace(location.origin + base + '#' + route + location.search);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

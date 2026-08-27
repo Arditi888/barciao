@@ -1,0 +1,276 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   BAR CIAO — DESIGN TOKENS
+   Every colour, type face, radius and easing used in the site is
+   declared once here and consumed as a Tailwind utility.
+   ------------------------------------------------------------------ */
+@theme {
+  /* Ground — deep charcoal, never pure black */
+  --color-ink: #0a0a0b;
+  --color-ink-900: #0e0e10;
+  --color-ink-800: #131316;
+  --color-ink-700: #1a1a1e;
+  --color-ink-600: #232329;
+  --color-ink-500: #2f2f36;
+
+  /* Ink-on-dark */
+  --color-cream: #f2ede3;
+  --color-cream-dim: #cdc6b9;
+  --color-mute: #97907f;
+  --color-mute-dim: #6d675c;
+
+  /* Accents */
+  --color-gold: #c6a15b;
+  --color-gold-soft: #e2caa0;
+  --color-gold-deep: #8c6d33;
+  --color-burgundy: #7a1f33;
+  --color-aperol: #e2571f;
+  --color-live: #4ea36b;
+
+  /* Type */
+  --font-display: 'Bodoni Moda', 'Didot', 'Times New Roman', serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Restrained radii — the brand is squared, not pill-shaped */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Layout */
+  --spacing-safe: env(safe-area-inset-bottom, 0px);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    /* Height of the mobile tab bar; pages pad their tail by this. */
+    --tabbar-h: 4.25rem;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  /* One visible, consistent focus ring across the whole site. */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  input[type='search']::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   UTILITIES
+   ------------------------------------------------------------------ */
+
+/* Horizontal scrollers (menu categories) keep their gesture, lose the bar. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* The small uppercase label used above every section heading. */
+@utility eyebrow {
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Tabular figures so price columns line up exactly. */
+@utility numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Hairline rule matching the card borders. */
+@utility rule {
+  border-color: color-mix(in srgb, var(--color-cream) 10%, transparent);
+}
+
+/* Fades the right edge of a horizontal scroller to signal more content. */
+@utility scroll-fade-x {
+  mask-image: linear-gradient(to right, transparent 0, #000 1.25rem, #000 calc(100% - 2rem), transparent 100%);
+}
+
+/* Guarantees a comfortable thumb target regardless of visual size. */
+@utility tap {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -0.5rem;
+  }
+}
+
+/* Very fine film grain — gives the flat charcoal ground some depth
+   without an image request. Tiled at 120px so it stays cheap. */
+@utility grain {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+}
+
+/* ------------------------------------------------------------------
+   MOTION — every animation below is disabled by the media query at
+   the end of this file.
+   ------------------------------------------------------------------ */
+@keyframes ciao-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ciao-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.04);
+  }
+  50% {
+    transform: translate3d(0, -2.5%, 0) scale(1.11);
+  }
+}
+
+@keyframes ciao-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.7);
+  }
+}
+
+/* Content swaps — menu categories, event filters, quiz steps. No fill
+   mode on purpose: if the animation is ever starved (a backgrounded
+   tab, a stalled frame loop) the element still paints at its resting
+   style, so content can never be left invisible or stale. */
+@keyframes ciao-swap-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ciao-sheen {
+  from {
+    background-position: 180% 0;
+  }
+  to {
+    background-position: -80% 0;
+  }
+}
+
+/* Scroll reveal. The resting state is the hidden one and a class flip
+   moves it to the shown state, so the transition is decoration over a
+   change React has already committed. */
+@utility reveal {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 0.7s var(--ease-out-expo),
+    transform 0.7s var(--ease-out-expo);
+}
+
+@utility reveal-shown {
+  opacity: 1;
+  transform: none;
+}
+
+@utility animate-swap-in {
+  animation: ciao-swap-in 0.26s var(--ease-out-expo);
+}
+
+@utility animate-fade-up {
+  animation: ciao-fade-up 0.7s var(--ease-out-expo) both;
+}
+
+@utility animate-drift {
+  animation: ciao-drift 26s ease-in-out infinite;
+}
+
+@utility animate-status-pulse {
+  animation: ciao-pulse 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
