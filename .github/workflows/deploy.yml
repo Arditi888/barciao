@@ -48,6 +48,22 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # While Settings -> Pages -> Source is still "Deploy from a branch",
+      # GitHub also runs its own "pages build and deployment" on every
+      # push. That one publishes the repository ROOT, which is the
+      # un-built Vite source, and whichever deployment finishes last is
+      # the one that goes live. On 28 Aug 2026 the branch build finished
+      # six seconds after this workflow and took the site down.
+      #
+      # Waiting here makes this deployment reliably the last one, so the
+      # built site always wins the race.
+      #
+      # DELETE THIS STEP once Settings -> Pages -> Source is set to
+      # "GitHub Actions" — the branch build stops running and the wait
+      # becomes dead weight.
+      - name: Wait out the legacy branch build
+        run: sleep 90
+
       - name: Publish to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

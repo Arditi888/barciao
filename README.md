@@ -268,6 +268,15 @@ git add -A && git commit -m "Update menu prices" && git push
 
 That is the whole publishing process.
 
+> **One setting still needs changing by hand.** Open
+> **Settings → Pages → Build and deployment → Source** and set it to
+> **GitHub Actions**. It is currently *Deploy from a branch*, which makes
+> GitHub run a second, competing build that publishes the repository root
+> — the un-built source — and whichever finishes last goes live. The
+> workflow now waits 90 seconds so the real build always lands last, but
+> that is a workaround. Once the source is switched, delete the
+> "Wait out the legacy branch build" step from the workflow.
+
 `npm run deploy` still exists as a manual fallback (it pushes `dist/` to
 a `gh-pages` branch via the `gh-pages` package), but it is not needed
 while the workflow is active — and mixing the two means whichever ran
