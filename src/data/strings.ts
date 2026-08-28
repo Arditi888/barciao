@@ -11,7 +11,7 @@ export const t = {
   nav: {
     home: 'Home',
     menu: 'Menu',
-    events: 'Evente',
+    events: 'Futboll',
     findDrink: 'Gjej pijen',
     visit: 'Vizito',
     openMenu: 'Hap menunë',
@@ -31,19 +31,20 @@ export const t = {
     eyebrow: 'Shkurtore',
     title: 'Nga ku do të fillosh?',
     menu: { title: 'Menu', caption: 'Pije, kafe dhe antipasta' },
-    events: { title: 'Evente', caption: 'Futboll, muzikë, mbrëmje' },
+    events: { title: 'Futboll', caption: 'Ndeshjet live te Ciao' },
     findDrink: { title: 'Gjej pijen', caption: 'Pesë pyetje, një përgjigje' },
     hours: { title: 'Orari', caption: 'Kur jemi hapur' },
     location: { title: 'Ku jemi', caption: 'Na gjej në hartë' },
   },
 
-  tonight: {
-    eyebrow: 'Sonte në Ciao',
-    all: 'Shiko të gjitha eventet',
-    emptyTitle: 'Nuk ke plane sonte?',
-    emptyBody: 'Ciao tingëllon mirë.',
+  football: {
+    eyebrow: 'Futboll në Ciao',
+    tonightEyebrow: 'Sonte në Ciao',
+    nextUp: 'Ndeshja e radhës',
+    all: 'Shiko të gjitha ndeshjet',
+    emptyTitle: 'Asnjë ndeshje e planifikuar.',
+    emptyBody: 'Kthehu së shpejti — kalendari përditësohet rregullisht.',
     emptyCta: 'Shiko menunë',
-    liveAt: 'Live në Ciao',
   },
 
   favourites: {
@@ -89,6 +90,7 @@ export const t = {
     address: 'Adresa',
     contact: 'Kontakt',
     maps: 'Hape në Google Maps',
+    directions: 'Merr drejtimet',
     instagram: 'Instagram',
     phone: 'Telefono',
     whatsapp: 'WhatsApp',
@@ -114,21 +116,29 @@ export const t = {
   },
 
   events: {
-    title: 'Evente',
-    caption: 'Futboll, muzikë dhe mbrëmje në Ciao.',
+    title: 'Futboll live',
+    caption: 'Çdo ndeshje e madhe, në ekran të madh te Ciao.',
     filterAll: 'Të gjitha',
-    filterSport: 'Sport',
-    filterMusic: 'Muzikë',
-    filterSpecial: 'Speciale',
-    showPast: 'Shfaq eventet e kaluara',
-    hidePast: 'Fshih eventet e kaluara',
+    filterWeek: 'Këtë javë',
+    showPast: 'Shfaq ndeshjet e luajtura',
+    hidePast: 'Fshih ndeshjet e luajtura',
     pastTitle: 'Ka kaluar',
-    emptyTitle: 'Ende asgjë e planifikuar.',
+    emptyTitle: 'Ende asnjë ndeshje.',
     emptyBody: 'Kthehu së shpejti.',
-    emptyFilterTitle: 'Asnjë event në këtë kategori.',
+    emptyFilterTitle: 'Asnjë ndeshje në këtë kategori.',
     emptyFilterBody: 'Provo një filtër tjetër.',
     addToCalendar: 'Shto në kalendar',
     live: 'Live në Ciao',
+    matchPick: 'Ciao Match Pick',
+    kickoffTbc: 'Ora konfirmohet së shpejti',
+    provisional: 'Data mund të ndryshojë',
+    openMatch: 'Hape ndeshjen',
+    close: 'Mbyll',
+    kickoff: 'Ora',
+    date: 'Data',
+    competition: 'Kompeticioni',
+    where: 'Ku',
+    barStatus: 'Bari',
   },
 
   seo: {
@@ -143,9 +153,9 @@ export const t = {
         'Menuja e plotë e Bar Ciao: kafe, birra, verë, cocktails, pije alkoolike, shots, antipasta dhe pije pa alkool. Çmimet në Lek.',
     },
     events: {
-      title: 'Evente | Bar Ciao Tiranë',
+      title: 'Futboll live | Bar Ciao Tiranë',
       description:
-        'Ndeshje futbolli, mbrëmje muzikore dhe evente speciale në Bar Ciao, Tiranë. Shiko çfarë po ndodh këtë javë.',
+        'Champions League, Premier League, Serie A dhe ndeshjet e Shqipërisë, live në ekran të madh te Bar Ciao, Tiranë.',
     },
     findDrink: {
       title: 'Gjej pijen tënde | Bar Ciao Tiranë',
@@ -160,12 +170,6 @@ export const t = {
       title: 'Faqja nuk u gjet | Bar Ciao',
       description: 'Kjo faqe nuk ekziston.',
     },
-  },
-
-  eventTypes: {
-    sport: 'Sport',
-    music: 'Muzikë',
-    special: 'Speciale',
   },
 
   badges: {

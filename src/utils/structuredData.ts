@@ -50,19 +50,15 @@ function buildSchema(): Record<string, unknown> {
       addressLocality: business.city,
       addressCountry: 'AL',
     },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: business.location.latitude,
+      longitude: business.location.longitude,
+    },
+    hasMap: business.location.googleMapsUrl,
     openingHoursSpecification: hoursSpecification(openingHours),
     url: window.location.href.split('#')[0],
   };
-
-  // Only assert a pin once a real location has been configured — the
-  // default coordinates are a city-centre placeholder.
-  if (contact.addressLine) {
-    schema.geo = {
-      '@type': 'GeoCoordinates',
-      latitude: contact.latitude,
-      longitude: contact.longitude,
-    };
-  }
 
   if (contact.phone) schema.telephone = contact.phone;
   if (sameAs.length > 0) schema.sameAs = sameAs;

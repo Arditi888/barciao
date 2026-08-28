@@ -1,6 +1,6 @@
-import { AtSign } from 'lucide-react';
+import { AtSign, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { business, contact } from '../../data/business';
+import { business, contact, mapsHref } from '../../data/business';
 import { t } from '../../data/strings';
 import { OpeningStatus } from '../ui/OpeningStatus';
 import { Container } from '../ui/Container';
@@ -31,6 +31,16 @@ export function Footer() {
                 {item.label}
               </Link>
             ))}
+
+            <a
+              href={mapsHref}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-2 py-2.5 text-sm text-cream-dim/70 transition-colors duration-300 hover:text-cream"
+            >
+              <MapPin className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+              {business.location.label}
+            </a>
 
             {contact.instagram ? (
               <a

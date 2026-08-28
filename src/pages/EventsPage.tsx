@@ -1,22 +1,31 @@
 import { useMemo, useState } from 'react';
-import { EventCard } from '../components/events/EventCard';
+import { MatchCard } from '../components/events/MatchCard';
+import { MatchDetail } from '../components/events/MatchDetail';
 import { Container } from '../components/ui/Container';
 import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
 import { events as allEvents } from '../data/events';
 import { t } from '../data/strings';
-import type { EventType } from '../types';
-import { groupByBucket, pastEvents, upcomingEvents } from '../utils/date';
-import { cx } from '../utils/format';
 import { useSeo } from '../hooks/useSeo';
+import type { Competition, FootballEvent } from '../types';
+import {
+  competitionLabels,
+  groupByBucket,
+  isThisWeek,
+  pastEvents,
+  upcomingEvents,
+} from '../utils/date';
+import { cx } from '../utils/format';
 
-type Filter = EventType | 'all';
+type Filter = Competition | 'all' | 'week';
 
 const filters: { value: Filter; label: string }[] = [
   { value: 'all', label: t.events.filterAll },
-  { value: 'sport', label: t.events.filterSport },
-  { value: 'music', label: t.events.filterMusic },
-  { value: 'special', label: t.events.filterSpecial },
+  { value: 'champions-league', label: competitionLabels['champions-league'] },
+  { value: 'premier-league', label: competitionLabels['premier-league'] },
+  { value: 'serie-a', label: competitionLabels['serie-a'] },
+  { value: 'albania', label: competitionLabels.albania },
+  { value: 'week', label: t.events.filterWeek },
 ];
 
 export function EventsPage() {
@@ -24,13 +33,21 @@ export function EventsPage() {
 
   const [filter, setFilter] = useState<Filter>('all');
   const [showPast, setShowPast] = useState(false);
+  const [openMatch, setOpenMatch] = useState<FootballEvent | null>(null);
 
   const upcoming = useMemo(() => upcomingEvents(allEvents), []);
   const past = useMemo(() => pastEvents(allEvents), []);
 
-  const byFilter = (type: EventType) => filter === 'all' || filter === type;
-  const visibleUpcoming = upcoming.filter((event) => byFilter(event.type));
-  const visiblePast = past.filter((event) => byFilter(event.type));
+  const matchesFilter = (event: FootballEvent) => {
+    if (filter === 'all') return true;
+    if (filter === 'week') return isThisWeek(event);
+    return event.competition === filter;
+  };
+
+  const visibleUpcoming = upcoming.filter(matchesFilter);
+  const visiblePast = past.filter(
+    (event) => filter === 'all' || filter === 'week' || event.competition === filter,
+  );
 
   const groups = useMemo(() => groupByBucket(visibleUpcoming), [visibleUpcoming]);
   const nothingScheduled = upcoming.length === 0;
@@ -63,25 +80,25 @@ export function EventsPage() {
 
       <Container className="pb-24 lg:pb-28">
         <div key={filter} className="animate-swap-in">
-            {visibleUpcoming.length === 0 ? (
-              <EmptyState
-                title={nothingScheduled ? t.events.emptyTitle : t.events.emptyFilterTitle}
-                body={nothingScheduled ? t.events.emptyBody : t.events.emptyFilterBody}
-              />
-            ) : (
-              <div className="space-y-14">
-                {groups.map((group) => (
-                  <section key={group.bucket}>
-                    <h2 className="eyebrow border-b border-cream/8 pb-4 text-gold">{group.label}</h2>
-                    <div className="mt-6 grid gap-3 sm:gap-4 lg:grid-cols-2">
-                      {group.events.map((event) => (
-                        <EventCard key={event.id} event={event} />
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            )}
+          {visibleUpcoming.length === 0 ? (
+            <EmptyState
+              title={nothingScheduled ? t.events.emptyTitle : t.events.emptyFilterTitle}
+              body={nothingScheduled ? t.events.emptyBody : t.events.emptyFilterBody}
+            />
+          ) : (
+            <div className="space-y-14">
+              {groups.map((group) => (
+                <section key={group.bucket}>
+                  <h2 className="eyebrow border-b border-cream/8 pb-4 text-gold">{group.label}</h2>
+                  <div className="mt-6 grid gap-3 sm:gap-4 lg:grid-cols-2">
+                    {group.events.map((event) => (
+                      <MatchCard key={event.id} event={event} onOpen={setOpenMatch} />
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          )}
         </div>
 
         {visiblePast.length > 0 ? (
@@ -100,7 +117,7 @@ export function EventsPage() {
                 <h2 className="eyebrow border-b border-cream/8 pb-4 text-mute">{t.events.pastTitle}</h2>
                 <div className="mt-6 grid gap-3 sm:gap-4 lg:grid-cols-2">
                   {visiblePast.map((event) => (
-                    <EventCard key={event.id} event={event} past />
+                    <MatchCard key={event.id} event={event} past />
                   ))}
                 </div>
               </div>
@@ -108,6 +125,8 @@ export function EventsPage() {
           </div>
         ) : null}
       </Container>
+
+      <MatchDetail event={openMatch} onClose={() => setOpenMatch(null)} />
     </>
   );
 }

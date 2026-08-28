@@ -1,6 +1,6 @@
-import { AtSign, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { AtSign, MapPin, MessageCircle, Navigation, Phone } from 'lucide-react';
 import type { ComponentType } from 'react';
-import { contact, mapsHref } from '../../data/business';
+import { business, contact, directionsHref, mapsHref } from '../../data/business';
 import { t } from '../../data/strings';
 import { cx } from '../../utils/format';
 
@@ -20,9 +20,17 @@ function buildRows(includeMaps: boolean): Row[] {
     rows.push({
       key: 'maps',
       label: t.visit.maps,
-      value: contact.addressLine || contact.addressArea,
+      value: contact.addressLine || business.location.label,
       href: mapsHref,
       icon: MapPin,
+    });
+
+    rows.push({
+      key: 'directions',
+      label: t.visit.directions,
+      value: business.city,
+      href: directionsHref,
+      icon: Navigation,
     });
   }
 

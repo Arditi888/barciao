@@ -4,7 +4,7 @@ import { Favourites } from '../components/home/Favourites';
 import { FindYourDrinkTeaser } from '../components/home/FindYourDrinkTeaser';
 import { Hero } from '../components/home/Hero';
 import { QuickActions } from '../components/home/QuickActions';
-import { TonightAtCiao } from '../components/home/TonightAtCiao';
+import { FootballAtCiao } from '../components/home/FootballAtCiao';
 import { VisitSection } from '../components/home/VisitSection';
 import { useSeo } from '../hooks/useSeo';
 
@@ -15,7 +15,7 @@ export function HomePage() {
     <>
       <Hero />
       <QuickActions />
-      <TonightAtCiao />
+      <FootballAtCiao />
       <Favourites />
       <FindYourDrinkTeaser />
       <CiaoMood />

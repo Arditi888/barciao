@@ -1,4 +1,6 @@
-import { contact, hasDirectContact, images } from '../data/business';
+import { MapPin, Navigation } from 'lucide-react';
+import { business, contact, directionsHref, hasDirectContact, images, mapsHref } from '../data/business';
+import { Button } from '../components/ui/Button';
 import { t } from '../data/strings';
 import { Container } from '../components/ui/Container';
 import { OpeningStatus } from '../components/ui/OpeningStatus';
@@ -12,7 +14,7 @@ import { useSeo } from '../hooks/useSeo';
 export function VisitPage() {
   useSeo(t.seo.visit.title, t.seo.visit.description);
 
-  const address = contact.addressLine || contact.addressArea;
+  const address = contact.addressLine || business.location.label;
 
   return (
     <>
@@ -49,9 +51,27 @@ export function VisitPage() {
               <section className="rounded-sm border border-cream/10 bg-ink-800/70 p-6">
                 <h2 className="eyebrow text-gold">{t.visit.address}</h2>
                 <p className="mt-4 text-[0.9375rem] text-cream">{address}</p>
-                {!contact.addressLine ? (
-                  <p className="mt-2 text-[0.75rem] text-mute">{t.visit.addressPending}</p>
-                ) : null}
+                <p className="mt-2 text-[0.75rem] text-mute">{contact.addressArea}</p>
+
+                <div className="mt-6 flex flex-col gap-3">
+                  <Button
+                    href={mapsHref}
+                    size="sm"
+                    full
+                    icon={<MapPin className="h-4 w-4" strokeWidth={1.5} />}
+                  >
+                    {t.visit.maps}
+                  </Button>
+                  <Button
+                    href={directionsHref}
+                    variant="secondary"
+                    size="sm"
+                    full
+                    icon={<Navigation className="h-4 w-4" strokeWidth={1.5} />}
+                  >
+                    {t.visit.directions}
+                  </Button>
+                </div>
               </section>
             </Reveal>
 

@@ -18,7 +18,28 @@ export const business = {
 
   /** Prices across the site are printed in this currency. */
   currency: 'Lek',
+
+  /* ----------------------------------------------------------------
+     THE REAL LOCATION
+     Every map link, directions button and address line on the site is
+     built from these three values. Nothing else hard-codes a position.
+     ---------------------------------------------------------------- */
+  location: {
+    latitude: 41.3228941,
+    longitude: 19.8100468,
+    googleMapsUrl: 'https://maps.app.goo.gl/1QGf1qvdp9FnW6HT6',
+    /** Shown wherever an address would go. The exact street address is
+     *  not published, so the bar's name and city stand in for it. */
+    label: 'Bar Ciao • Tirana',
+  },
 } as const;
+
+/** Opens the bar's own Google Maps place page. */
+export const mapsHref: string = business.location.googleMapsUrl;
+
+/** Opens Google Maps directions straight to the bar. */
+export const directionsHref: string =
+  `https://www.google.com/maps/dir/?api=1&destination=${business.location.latitude},${business.location.longitude}`;
 
 /* ------------------------------------------------------------------
    CONTACT & LOCATION
@@ -26,11 +47,10 @@ export const business = {
    — nothing renders as a dead link or a broken button.
    ------------------------------------------------------------------ */
 export interface ContactConfig {
+  /** Optional street address. Left empty, the site shows
+   *  `business.location.label` instead. */
   addressLine: string;
   addressArea: string;
-  latitude: number;
-  longitude: number;
-  googleMapsUrl: string;
   instagram: string;
   facebook: string;
   phone: string;
@@ -41,14 +61,6 @@ export interface ContactConfig {
 export const contact: ContactConfig = {
   addressLine: '',
   addressArea: 'Tiranë, Shqipëri',
-
-  /** Used for the embedded map. Tirana city centre is the placeholder. */
-  latitude: 41.3275,
-  longitude: 19.8187,
-
-  /** Paste the share link from Google Maps here. */
-  googleMapsUrl: '',
-
   instagram: '',
   facebook: '',
   phone: '',
@@ -59,11 +71,6 @@ export const contact: ContactConfig = {
 /** True when the bar has a channel someone can actually reach it on,
  *  as opposed to just a location on a map. */
 export const hasDirectContact = Boolean(contact.instagram || contact.phone || contact.whatsapp);
-
-/** Built from lat/lng when no explicit share link has been configured. */
-export const mapsHref =
-  contact.googleMapsUrl ||
-  `https://www.google.com/maps/search/?api=1&query=${contact.latitude},${contact.longitude}`;
 
 /* ------------------------------------------------------------------
    OPENING HOURS

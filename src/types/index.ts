@@ -73,31 +73,55 @@ export interface MenuCategory {
 }
 
 /* ------------------------------------------------------------------
-   EVENTS
+   FOOTBALL EVENTS
+   Every event on the site is a football match. Adding one means
+   appending an object to src/data/events.ts — nothing else.
    ------------------------------------------------------------------ */
 
-export type EventType = 'sport' | 'music' | 'special';
+export type Competition = 'champions-league' | 'premier-league' | 'serie-a' | 'albania';
 
-export interface EventTeams {
-  home: string;
-  away: string;
-  competition?: string;
+/** `confirmed` = date AND kick-off time published by the competition.
+ *  `provisional` = the fixture is official but the exact day or time can
+ *  still move (broadcast selection, or a schedule not yet released). */
+export type FixtureStatus = 'confirmed' | 'provisional';
+
+/** The beers Bar Ciao actually stocks. Typed as a union so a match
+ *  recommendation naming a beer the bar does not sell fails the build.
+ *  Keep in step with the `beer` category in src/data/menu.ts. */
+export type BeerChoice =
+  | 'Estrella Damm'
+  | 'Estrella Galicia'
+  | 'Estrella Galicia 500 ml'
+  | 'Peroni Nastro Azzurro'
+  | 'Corona';
+
+/** The Ciao pairing shown on every match card. Both values must name
+ *  things the bar actually sells. */
+export interface MatchRecommendation {
+  beer: BeerChoice;
+  /** Built from antipasti ingredients, e.g. "Salçiçe & Patatina". */
+  snack: string;
+  /** Optional label above the pairing; defaults to "Ciao Match Pick". */
+  title?: string;
 }
 
-export interface CiaoEvent {
+export interface FootballEvent {
   id: string;
-  title: string;
-  type: EventType;
+  competition: Competition;
+  homeTeam: string;
+  awayTeam: string;
   /** ISO date, `YYYY-MM-DD`, local to Tirana. */
   date: string;
-  /** 24h `HH:MM`, local to Tirana. */
-  time: string;
-  description?: string;
-  image?: string;
-  featured?: boolean;
-  teams?: EventTeams;
-  /** Optional in-page action, e.g. link to the menu. */
-  cta?: { label: string; to: string };
+  /** 24h `HH:MM` in Tirana time, or null when kick-off is not yet set. */
+  time: string | null;
+  status: FixtureStatus;
+  /** Promotes the match on the homepage and enlarges its card. */
+  featured: boolean;
+  recommendation: MatchRecommendation;
+  /** Optional competition detail, e.g. "Matchday 1" or "Group C1". */
+  stage?: string;
+  /** Where the source date/time came from, for future maintenance. */
+  source?: string;
 }
 
 export type EventBucket = 'today' | 'tomorrow' | 'week' | 'later' | 'past';

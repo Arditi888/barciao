@@ -41,7 +41,7 @@ function StreetPattern() {
 }
 
 export function MapPanel({ className }: { className?: string }) {
-  const label = contact.addressLine || contact.addressArea;
+  const label = contact.addressLine || business.location.label;
 
   return (
     <a

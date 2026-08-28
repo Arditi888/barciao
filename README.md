@@ -80,37 +80,66 @@ they render as boards with their contents listed, not as single lines.
 the file. It references products by `id`, so prices there can never drift
 out of sync.
 
-### Add an event → `src/data/events.ts`
+### Add a match → `src/data/events.ts`
 
-Append an object to the array. Order does not matter; the site sorts by
-date and hides past events on its own.
+Every event on the site is a football match. Append an object; sorting,
+the SOT / NESËR / KËTË JAVË grouping and the hiding of finished matches
+all happen on their own.
 
 ```ts
 {
-  id: 'juventus-inter',              // unique
-  title: 'Juventus vs Inter',
-  type: 'sport',                     // 'sport' | 'music' | 'special'
-  date: '2026-09-13',                // YYYY-MM-DD
-  time: '20:45',                     // 24-hour
-  description: 'Derbi d’Italia, live në Ciao.',
-  featured: true,                    // promotes it on the homepage
-  teams: { home: 'Juventus', away: 'Inter', competition: 'Serie A' },
+  id: 'arsenal-chelsea-2026-09-06',
+  competition: 'premier-league',   // champions-league | premier-league | serie-a | albania
+  homeTeam: 'Arsenal',
+  awayTeam: 'Chelsea',
+  date: '2026-09-06',              // YYYY-MM-DD, Tirana local
+  time: '17:30',                   // HH:MM Tirana, or null if kick-off is unset
+  status: 'confirmed',             // or 'provisional'
+  featured: true,                  // enlarges the card, promotes it on the homepage
+  stage: 'Matchweek 3',            // optional line under the competition
+  recommendation: {
+    beer: 'Estrella Damm',
+    snack: 'Proshutë crudo & Pomodorini',
+  },
 }
 ```
 
-Adding `teams` turns a `sport` event into the large match card
-(**JUVENTUS / vs / INTER / 20:45 / LIVE NË CIAO**). Team names are set as
-type — no club crests are used, so nothing here depends on artwork the
-bar does not own. Add `image: '/images/events/your-file.jpg'` for a
-photographic background.
+**The beer is type-checked.** It must be one of the five the bar stocks
+— `Estrella Damm`, `Estrella Galicia`, `Estrella Galicia 500 ml`,
+`Peroni Nastro Azzurro`, `Corona`. Anything else fails `npm run build`,
+so the site can never recommend a beer you do not sell.
 
-Events are automatically sorted into **Sot / Nesër / Këtë javë / Së
-shpejti**, and drop into the collapsed "past" list three hours after they
-start, so a 21:00 match does not disappear at 21:01.
+**The snack** is built from antipasti ingredients already behind the
+bar: Salçiçe e thatë · Sallam · Djathë i bardhë · Cheddar · Parmesan ·
+Mix djathërash · Trio djathërash · Proshutë crudo · Speck · Ullinj ·
+Patatina · Krikera · Nachos me salcë · Pomodorini · Rrush i thatë ·
+Bukë artizanale. No cooking required.
 
-> The events currently in the file are seed data. Replace them with real
-> ones — they are dated around late August 2026 so the homepage and the
-> past-events toggle both have something to show.
+**`status`** is the honesty switch. `confirmed` means the competition
+has published both the date and the kick-off time. `provisional` means
+the fixture is real but the day or time can still move — the card then
+shows "Data mund të ndryshojë", and a `null` time shows "Ora
+konfirmohet së shpejti" instead of a made-up kick-off.
+
+**Finished matches** disappear from the site three hours after kick-off.
+Leave them in the file; nothing needs deleting.
+
+#### What is in the calendar right now
+
+| Competition | Matches | Dates |
+| --- | --- | --- |
+| Premier League | 9 | confirmed date **and** kick-off, from the live-TV selections |
+| Shqipëria | 6 | confirmed — the full Nations League C group stage |
+| Serie A | 3 | date confirmed, kick-off still to be set (`provisional`) |
+| Champions League | 0 | see below |
+
+**Champions League is deliberately empty.** The league-phase draw was
+made on 27 August 2026, so the pairings exist, but UEFA does not publish
+which match is played on which day, or at what time, until the fixture
+list is released on **29 August 2026**. Adding fixtures before then
+would mean inventing dates. `events.ts` ends with a commented template
+and the six matchday windows — paste the real fixtures in and they
+appear on the site immediately, with no code changes.
 
 ### Change opening hours → `src/data/business.ts`
 
@@ -136,7 +165,28 @@ device timezone — a phone set to another country still shows the truth.
 `closingSoonMinutes` (default 45) controls when the status switches to
 "Mbyllet së shpejti".
 
-### Address, phone, socials → `src/data/business.ts`
+### Location → `src/data/business.ts`
+
+```ts
+location: {
+  latitude: 41.3228941,
+  longitude: 19.8100468,
+  googleMapsUrl: 'https://maps.app.goo.gl/1QGf1qvdp9FnW6HT6',
+  label: 'Bar Ciao • Tirana',
+},
+```
+
+These three values drive every map link on the site: the homepage
+location card, the map panel, the Visit page, the footer, and the
+"Hape në Google Maps" / "Merr drejtimet" buttons inside each match. The
+directions link is built from the coordinates, so it opens turn-by-turn
+navigation straight to the bar. The same coordinates are published to
+search engines as the bar's `geo` position.
+
+`label` is what appears wherever a street address would go. Fill in
+`contact.addressLine` below and that replaces it.
+
+### Phone, socials → `src/data/business.ts`
 
 ```ts
 export const contact: ContactConfig = {
@@ -249,7 +299,7 @@ src/
     layout/     navigation, mobile tab bar, footer, page shell
     home/       the homepage sections, in page order
     menu/       category tabs, product rows, antipasto and drink cards
-    events/     event card and the football match card
+    events/     match poster card, detail modal, match pick
     quiz/       the drink finder's steps, progress and result
     ui/         Button, Badge, Container, EmptyState, OpeningStatus,
                 PageHeader, Reveal, SectionHeader, Wordmark
@@ -274,6 +324,14 @@ local — the same answers always give the same result, and there is no
 API involved. Alcohol is a hard filter; mood weighs most, then flavour
 and strength, then the occasion. To make a new product recommendable,
 give it a `profile` in `menu.ts`.
+
+**The football calendar** lives entirely in `src/data/events.ts`. The
+UI derives everything else: SOT / NESËR / KËTË JAVË come from the date
+in Europe/Tirane, matches sort chronologically (a featured December
+fixture never jumps above tomorrow's game), and each card carries its
+own Ciao Match Pick. Tapping a card opens the full match with the
+kick-off, the bar's opening status, the pairing and the map links. No
+club crests are used anywhere — the typography carries it.
 
 **Menu search** matches names, drink types, categories, descriptions,
 serving sizes and hand-written keywords, and folds Albanian diacritics —
