@@ -17,7 +17,7 @@ export function Navigation() {
         'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500',
         'ease-[var(--ease-soft)] border-b',
         scrolled
-          ? 'border-cream/10 bg-ink/85 backdrop-blur-md supports-[backdrop-filter]:bg-ink/70'
+          ? 'border-royal-light/20 bg-deeper/90 backdrop-blur-md supports-[backdrop-filter]:bg-deeper/75'
           : 'border-transparent bg-transparent',
       )}
     >
@@ -37,11 +37,11 @@ export function Navigation() {
                 className={({ isActive }) =>
                   cx(
                     'relative py-2 text-[0.8125rem] tracking-[0.06em] transition-colors duration-300',
-                    'after:absolute after:-bottom-0.5 after:left-0 after:h-px after:bg-gold',
+                    'after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:bg-royal',
                     'after:transition-[width] after:duration-400 after:ease-[var(--ease-out-expo)]',
                     isActive
-                      ? 'text-cream after:w-full'
-                      : 'text-cream-dim/70 hover:text-cream after:w-0 hover:after:w-full',
+                      ? 'text-white after:w-full'
+                      : 'text-mist/70 hover:text-cream after:w-0 hover:after:w-full',
                   )
                 }
               >

@@ -36,9 +36,9 @@ export function SectionHeader({
     >
       <div className={cx('max-w-2xl', centred && 'text-center')}>
         {eyebrow ? (
-          <p className={cx('eyebrow text-gold', centred && 'mx-auto')}>
+          <p className={cx('eyebrow text-royal-light', centred && 'mx-auto')}>
             <span className="inline-flex items-center gap-2.5">
-              <span aria-hidden="true" className="h-px w-6 bg-gold/50" />
+              <span aria-hidden="true" className="h-px w-6 bg-royal-light/60" />
               {eyebrow}
             </span>
           </p>
@@ -56,7 +56,7 @@ export function SectionHeader({
         </h2>
 
         {caption ? (
-          <p className="mt-3 max-w-prose text-[0.9375rem] leading-relaxed text-cream-dim/75">
+          <p className="mt-3 max-w-prose text-[0.9375rem] leading-relaxed text-mist/75">
             {caption}
           </p>
         ) : null}

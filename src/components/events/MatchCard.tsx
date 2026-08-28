@@ -5,14 +5,13 @@ import { bucketLabel, competitionLabels, eventBucket, formatEventDate } from '..
 import { cx } from '../../utils/format';
 import { MatchRecommendation } from './MatchRecommendation';
 
-/** Albania gets a warmer accent; everything else stays on the gold.
- *  Deliberately restrained — one competition should not repaint the
- *  whole page. */
+/** Albania is marked out with the brand's own bright royal rather than
+ *  a national colour — the card should still read as Bar Ciao first. */
 const competitionAccent: Record<Competition, string> = {
-  'champions-league': 'text-cream-dim',
-  'premier-league': 'text-cream-dim',
-  'serie-a': 'text-cream-dim',
-  albania: 'text-aperol',
+  'champions-league': 'text-mist',
+  'premier-league': 'text-mist',
+  'serie-a': 'text-mist',
+  albania: 'text-royal-light',
 };
 
 interface MatchCardProps {
@@ -40,16 +39,16 @@ export function MatchCard({ event, featured = false, past = false, onOpen, class
     <>
       <header className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className={cx('eyebrow', past ? 'text-mute-dim' : competitionAccent[event.competition])}>
+          <p className={cx('eyebrow', past ? 'text-haze-dim' : competitionAccent[event.competition])}>
             {isAlbania ? `${competitionLabels.albania} 🇦🇱` : competitionLabels[event.competition]}
           </p>
           {event.stage ? (
-            <p className="mt-2 truncate text-[0.75rem] text-mute">{event.stage}</p>
+            <p className="mt-2 truncate text-[0.75rem] text-haze">{event.stage}</p>
           ) : null}
         </div>
 
         {isToday ? (
-          <span className="eyebrow shrink-0 rounded-xs border border-gold/40 px-2 py-1 text-gold">
+          <span className="eyebrow shrink-0 rounded-xs border border-royal-light/50 bg-royal/25 px-2 py-1 text-white">
             {bucketLabel(bucket)}
           </span>
         ) : null}
@@ -62,9 +61,9 @@ export function MatchCard({ event, featured = false, past = false, onOpen, class
         </p>
 
         <div className="my-3 flex items-center justify-center gap-4 sm:my-4">
-          <span aria-hidden="true" className="h-px max-w-[4.5rem] flex-1 bg-cream/15" />
-          <span className="eyebrow text-gold">vs</span>
-          <span aria-hidden="true" className="h-px max-w-[4.5rem] flex-1 bg-cream/15" />
+          <span aria-hidden="true" className="h-px max-w-[4.5rem] flex-1 bg-mist/20" />
+          <span className="eyebrow text-royal-light">vs</span>
+          <span aria-hidden="true" className="h-px max-w-[4.5rem] flex-1 bg-mist/20" />
         </div>
 
         <p className={cx('font-display leading-[1.05] tracking-[0.04em] uppercase text-cream', teamSize)}>
@@ -73,14 +72,14 @@ export function MatchCard({ event, featured = false, past = false, onOpen, class
 
         <div className="mt-7 flex flex-col items-center gap-2">
           {event.time ? (
-            <p className={cx('numeric font-display leading-none text-gold', featured ? 'text-4xl' : 'text-3xl')}>
+            <p className={cx('numeric font-display leading-none text-white', featured ? 'text-4xl' : 'text-3xl')}>
               {event.time}
             </p>
           ) : (
-            <p className="text-[0.8125rem] text-mute">{t.events.kickoffTbc}</p>
+            <p className="text-[0.8125rem] text-haze">{t.events.kickoffTbc}</p>
           )}
 
-          <p className={cx('eyebrow', past ? 'text-mute-dim' : 'text-mute')}>
+          <p className={cx('eyebrow', past ? 'text-haze-dim' : 'text-haze')}>
             {past ? bucketLabel('past') : t.events.live}
           </p>
         </div>
@@ -88,11 +87,11 @@ export function MatchCard({ event, featured = false, past = false, onOpen, class
 
       <div className="mt-auto">
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 pb-5">
-          <p className={cx('text-[0.875rem]', past ? 'text-mute-dim' : 'text-cream-dim/80')}>
+          <p className={cx('text-[0.875rem]', past ? 'text-haze-dim' : 'text-mist/80')}>
             {formatEventDate(event)}
           </p>
           {event.status === 'provisional' && !past ? (
-            <p className="text-[0.75rem] text-mute">{t.events.provisional}</p>
+            <p className="text-[0.75rem] text-haze">{t.events.provisional}</p>
           ) : null}
         </div>
 
@@ -109,9 +108,9 @@ export function MatchCard({ event, featured = false, past = false, onOpen, class
   const shell = cx(
     'group relative flex h-full flex-col overflow-hidden rounded-sm border text-left transition-colors duration-400',
     past
-      ? 'border-cream/8 bg-ink-900/40 opacity-55'
-      : 'border-cream/10 bg-ink-800/70 hover:border-cream/25',
-    isAlbania && !past && 'border-aperol/25 hover:border-aperol/45',
+      ? 'border-mist/10 bg-deeper/50 opacity-55'
+      : 'border-mist/15 bg-deeper/70 hover:border-royal-light/45 hover:bg-surface/70',
+    isAlbania && !past && 'border-royal/50 bg-surface/60 hover:border-royal-light/70',
     featured ? 'p-6 sm:p-9' : 'p-5 sm:p-6',
     className,
   );
@@ -122,15 +121,15 @@ export function MatchCard({ event, featured = false, past = false, onOpen, class
 
   return (
     <button type="button" onClick={() => onOpen(event)} className={shell} aria-label={`${event.homeTeam} – ${event.awayTeam}. ${t.events.openMatch}`}>
-      {/* Gold rule that draws itself across the top edge on hover. */}
+      {/* Royal rule that draws itself across the top edge on hover. */}
       <span
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px w-0 bg-gold transition-[width] duration-600 ease-[var(--ease-out-expo)] group-hover:w-full"
+        className="absolute inset-x-0 top-0 h-px w-0 bg-royal transition-[width] duration-600 ease-[var(--ease-out-expo)] group-hover:w-full"
       />
       {content}
       <ArrowUpRight
         aria-hidden="true"
-        className="absolute top-5 right-5 h-4 w-4 text-mute-dim opacity-0 transition-all duration-400 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gold group-hover:opacity-100"
+        className="absolute top-5 right-5 h-4 w-4 text-haze-dim opacity-0 transition-all duration-400 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-royal-light group-hover:opacity-100"
       />
     </button>
   );

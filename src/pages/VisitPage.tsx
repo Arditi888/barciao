@@ -41,17 +41,17 @@ export function VisitPage() {
 
           <div className="flex flex-col gap-4 lg:col-span-2">
             <Reveal delay={0.06}>
-              <section className="rounded-sm border border-cream/10 bg-ink-800/70 p-6">
-                <h2 className="eyebrow text-gold">{t.visit.hours}</h2>
+              <section className="rounded-sm border border-mist/15 bg-surface/70 p-6">
+                <h2 className="eyebrow text-royal-light">{t.visit.hours}</h2>
                 <HoursTable className="mt-4" />
               </section>
             </Reveal>
 
             <Reveal delay={0.12}>
-              <section className="rounded-sm border border-cream/10 bg-ink-800/70 p-6">
-                <h2 className="eyebrow text-gold">{t.visit.address}</h2>
+              <section className="rounded-sm border border-mist/15 bg-surface/70 p-6">
+                <h2 className="eyebrow text-royal-light">{t.visit.address}</h2>
                 <p className="mt-4 text-[0.9375rem] text-cream">{address}</p>
-                <p className="mt-2 text-[0.75rem] text-mute">{contact.addressArea}</p>
+                <p className="mt-2 text-[0.75rem] text-haze">{contact.addressArea}</p>
 
                 <div className="mt-6 flex flex-col gap-3">
                   <Button
@@ -77,8 +77,8 @@ export function VisitPage() {
 
             {hasDirectContact ? (
               <Reveal delay={0.18}>
-                <section className="rounded-sm border border-cream/10 bg-ink-800/70 px-6 pt-6 pb-2">
-                  <h2 className="eyebrow text-gold">{t.visit.contact}</h2>
+                <section className="rounded-sm border border-mist/15 bg-surface/70 px-6 pt-6 pb-2">
+                  <h2 className="eyebrow text-royal-light">{t.visit.contact}</h2>
                   <ContactLinks className="mt-2" includeMaps={false} />
                 </section>
               </Reveal>

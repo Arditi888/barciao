@@ -10,9 +10,9 @@ interface MatchRecommendationProps {
   className?: string;
 }
 
-/** The Ciao Match Pick. Sits inside the match card as part of the
- *  poster rather than as an advert bolted on the end: one hairline
- *  rule, the same type scale as the card, no boxes or badges. */
+/** The Ciao Match Pick. It sits on its own panel of lighter royal blue
+ *  so it reads as part of the poster rather than an advert stuck on the
+ *  end — the card is deep blue, this step is one tone up. */
 export function MatchRecommendation({
   beer,
   snack,
@@ -23,20 +23,26 @@ export function MatchRecommendation({
   const large = size === 'md';
 
   return (
-    <div className={cx('border-t border-cream/10 pt-4', className)}>
-      <p className="eyebrow text-gold">{title ?? t.events.matchPick}</p>
+    <div
+      className={cx(
+        'rounded-sm border border-royal-light/20 bg-royal/15',
+        large ? 'px-5 py-4' : 'px-4 py-3.5',
+        className,
+      )}
+    >
+      <p className="eyebrow text-royal-pale">{title ?? t.events.matchPick}</p>
 
       <p
         className={cx(
-          'mt-3 font-display leading-tight text-cream',
-          large ? 'text-[1.125rem]' : 'text-[1rem]',
+          'mt-2.5 font-display leading-tight text-white',
+          large ? 'text-[1.1875rem]' : 'text-[1.0625rem]',
         )}
       >
         {beer}
       </p>
 
-      <p className="mt-1 flex items-baseline gap-2 text-[0.8125rem] leading-snug text-cream-dim/70">
-        <span aria-hidden="true" className="text-gold/70">
+      <p className="mt-1 flex items-baseline gap-2 text-[0.8125rem] leading-snug text-mist">
+        <span aria-hidden="true" className="text-royal-pale">
           +
         </span>
         {snack}

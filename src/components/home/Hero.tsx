@@ -30,7 +30,7 @@ function Atmosphere() {
           fetchPriority="high"
           className="animate-drift h-full w-full object-cover opacity-45"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/55 to-ink" />
+        <div className="absolute inset-0 bg-gradient-to-b from-deep/70 via-deep/55 to-deep" />
       </div>
     );
   }
@@ -41,8 +41,9 @@ function Atmosphere() {
         className="animate-drift absolute inset-0"
         style={{
           background:
-            'radial-gradient(58% 46% at 22% 18%, rgba(122,31,51,0.30) 0%, transparent 68%),' +
-            'radial-gradient(62% 50% at 84% 74%, rgba(198,161,91,0.20) 0%, transparent 70%)',
+            // Two pools of royal light, as if thrown from opposite walls.
+            'radial-gradient(56% 44% at 20% 14%, rgba(111,143,240,0.30) 0%, transparent 66%),' +
+            'radial-gradient(64% 52% at 86% 78%, rgba(65,105,225,0.34) 0%, transparent 70%)',
         }}
       />
       {/* A low pool of light along the floor, the way a bar reads at night. */}
@@ -50,10 +51,12 @@ function Atmosphere() {
         className="absolute inset-x-0 bottom-0 h-2/3"
         style={{
           background:
-            'radial-gradient(80% 100% at 50% 118%, rgba(226,87,31,0.14) 0%, transparent 62%)',
+            'radial-gradient(80% 100% at 50% 120%, rgba(111,143,240,0.22) 0%, transparent 60%)',
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/45 via-transparent to-ink" />
+      {/* Deepens the edges so the type sits in the light, not on a wash. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-deeper/70 via-transparent to-deeper" />
+      <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_40%,transparent_35%,rgba(7,21,57,0.85)_100%)]" />
     </div>
   );
 }
@@ -91,7 +94,7 @@ export function Hero() {
           </h1>
 
           <p
-            className="animate-fade-up mt-7 max-w-md text-[1.0625rem] leading-relaxed text-cream-dim sm:text-lg"
+            className="animate-fade-up mt-7 max-w-md text-[1.0625rem] leading-relaxed text-mist sm:text-lg"
             style={enter(360)}
           >
             {t.hero.tagline}
@@ -99,7 +102,7 @@ export function Hero() {
 
           <ul className="animate-fade-up mt-7 space-y-1.5" style={enter(420)}>
             {t.hero.lines.map((line) => (
-              <li key={line} className="font-display text-[1.0625rem] text-mute italic sm:text-lg">
+              <li key={line} className="font-display text-[1.0625rem] text-haze italic sm:text-lg">
                 {line}
               </li>
             ))}
@@ -127,7 +130,7 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-8 hidden justify-center lg:flex"
       >
-        <span className="flex flex-col items-center gap-2.5 text-mute">
+        <span className="flex flex-col items-center gap-2.5 text-haze">
           <span className="eyebrow">{t.hero.scroll}</span>
           <ArrowDown className="h-4 w-4 animate-bounce" strokeWidth={1.25} />
         </span>

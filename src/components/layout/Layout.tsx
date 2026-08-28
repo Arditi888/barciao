@@ -23,7 +23,7 @@ export function Layout() {
     <div className="grain flex min-h-dvh flex-col">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-xs focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:text-ink"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-xs focus:bg-royal focus:px-4 focus:py-2 focus:text-sm focus:text-deep"
       >
         {t.common.skipToContent}
       </a>

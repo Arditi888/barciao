@@ -17,7 +17,7 @@ export function QuizResult({ result, onRestart }: QuizResultProps) {
 
   return (
     <div>
-      <p className="eyebrow text-gold">
+      <p className="eyebrow text-royal-light">
         {result.isLooseMatch ? t.findDrink.looseMatch : t.findDrink.resultEyebrow}
       </p>
 
@@ -29,27 +29,27 @@ export function QuizResult({ result, onRestart }: QuizResultProps) {
       </h1>
 
       {descriptors.length > 0 ? (
-        <p className="mt-5 text-[0.9375rem] text-cream-dim/75">
+        <p className="mt-5 text-[0.9375rem] text-mist/75">
           {descriptors.join(' · ')}
         </p>
       ) : null}
 
       {item.description ? (
-        <p className="mt-4 max-w-md text-[0.875rem] leading-relaxed text-cream-dim/60">
+        <p className="mt-4 max-w-md text-[0.875rem] leading-relaxed text-mist/60">
           {item.description}
         </p>
       ) : null}
 
       <div className="mt-8 flex items-baseline gap-2">
         {item.price === null ? (
-          <span className="text-[0.9375rem] text-mute">{t.menu.placeholderPrice}</span>
+          <span className="text-[0.9375rem] text-haze">{t.menu.placeholderPrice}</span>
         ) : (
           <>
-            <span className="numeric font-display text-[2rem] leading-none text-gold">{amount}</span>
-            <span className="text-[0.75rem] tracking-[0.12em] text-mute uppercase">{unit}</span>
+            <span className="numeric font-display text-[2rem] leading-none text-royal-light">{amount}</span>
+            <span className="text-[0.75rem] tracking-[0.12em] text-haze uppercase">{unit}</span>
           </>
         )}
-        <span className="ml-3 text-[0.75rem] text-mute">{categoryLabel(item.category)}</span>
+        <span className="ml-3 text-[0.75rem] text-haze">{categoryLabel(item.category)}</span>
       </div>
 
       <div className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -67,8 +67,8 @@ export function QuizResult({ result, onRestart }: QuizResultProps) {
       </div>
 
       {result.alternatives.length > 0 ? (
-        <section className="mt-16 border-t border-cream/10 pt-10">
-          <h2 className="eyebrow text-mute">{t.findDrink.alternativesTitle}</h2>
+        <section className="mt-16 border-t border-mist/15 pt-10">
+          <h2 className="eyebrow text-haze">{t.findDrink.alternativesTitle}</h2>
           <ul className="mt-6 grid gap-3 sm:grid-cols-2">
             {result.alternatives.map(({ item: alternative }) => (
               <li key={alternative.id}>

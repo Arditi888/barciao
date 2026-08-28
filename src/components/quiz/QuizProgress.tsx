@@ -9,8 +9,8 @@ export function QuizProgress({ current, total }: QuizProgressProps) {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <p className="eyebrow text-gold">{t.findDrink.eyebrow}</p>
-        <p className="numeric eyebrow text-mute" aria-live="polite">
+        <p className="eyebrow text-royal-light">{t.findDrink.eyebrow}</p>
+        <p className="numeric eyebrow text-haze" aria-live="polite">
           {t.findDrink.progress(current, total)}
         </p>
       </div>
@@ -28,7 +28,7 @@ export function QuizProgress({ current, total }: QuizProgressProps) {
             key={index}
             className={
               'h-px flex-1 transition-colors duration-500 ' +
-              (index < current ? 'bg-gold' : 'bg-cream/12')
+              (index < current ? 'bg-royal' : 'bg-mist/15')
             }
           />
         ))}

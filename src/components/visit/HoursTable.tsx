@@ -9,7 +9,7 @@ export function HoursTable({ className }: { className?: string }) {
   const today = todayIndex();
 
   return (
-    <dl className={cx('divide-y divide-cream/8', className)}>
+    <dl className={cx('divide-y divide-mist/12', className)}>
       {rows.map((row) => {
         const isToday = row.days.includes(today);
 
@@ -18,18 +18,18 @@ export function HoursTable({ className }: { className?: string }) {
             key={row.label}
             className={cx(
               'flex items-baseline justify-between gap-6 py-3.5',
-              isToday ? 'text-cream' : 'text-cream-dim/65',
+              isToday ? 'text-cream' : 'text-mist/65',
             )}
           >
             <dt className="flex items-center gap-2.5 text-[0.875rem]">
               {isToday ? (
-                <span aria-hidden="true" className="h-1 w-1 shrink-0 rounded-full bg-gold" />
+                <span aria-hidden="true" className="h-1 w-1 shrink-0 rounded-full bg-royal" />
               ) : (
                 <span aria-hidden="true" className="h-1 w-1 shrink-0" />
               )}
               {row.label}
             </dt>
-            <dd className={cx('numeric text-[0.875rem]', isToday && 'text-gold')}>{row.hours}</dd>
+            <dd className={cx('numeric text-[0.875rem]', isToday && 'text-royal-light')}>{row.hours}</dd>
           </div>
         );
       })}

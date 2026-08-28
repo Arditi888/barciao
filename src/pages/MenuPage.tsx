@@ -87,7 +87,7 @@ export function MenuPage() {
         <MenuSearch ref={searchRef} value={query} onChange={setQuery} className="max-w-lg" />
       </PageHeader>
 
-      <div className="sticky top-16 z-40 border-y border-cream/10 bg-ink/92 backdrop-blur-md supports-[backdrop-filter]:bg-ink/80 lg:top-20">
+      <div className="sticky top-16 z-40 border-y border-royal-light/20 bg-deeper/95 backdrop-blur-md supports-[backdrop-filter]:bg-deeper/85 lg:top-20">
         <div className="relative flex items-stretch">
           <CategoryTabs
             active={category}
@@ -99,13 +99,13 @@ export function MenuPage() {
           <div className="relative flex shrink-0 items-center pr-2 sm:pr-4 lg:pr-6">
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-0 -left-10 h-full w-10 bg-gradient-to-r from-transparent to-ink/92"
+              className="pointer-events-none absolute top-0 -left-10 h-full w-10 bg-gradient-to-r from-transparent to-deeper/95"
             />
             <button
               type="button"
               onClick={focusSearch}
               aria-label={t.menu.searchLabel}
-              className="relative flex h-11 w-11 items-center justify-center rounded-xs text-cream-dim/70 transition-colors duration-300 hover:text-cream"
+              className="relative flex h-11 w-11 items-center justify-center rounded-xs text-mist/70 transition-colors duration-300 hover:text-cream"
             >
               <Search className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.5} aria-hidden="true" />
             </button>
@@ -147,7 +147,7 @@ export function MenuPage() {
 
 function PanelCaption({ children }: { children?: string }) {
   if (!children) return null;
-  return <p className="mb-6 text-[0.8125rem] text-mute">{children}</p>;
+  return <p className="mb-6 text-[0.8125rem] text-haze">{children}</p>;
 }
 
 function CategoryPanel({
@@ -166,7 +166,7 @@ function CategoryPanel({
   return (
     <>
       <PanelCaption>{caption}</PanelCaption>
-      <ul className="border-t border-cream/8">
+      <ul className="border-t border-mist/12">
         {items.map((item) => (
           <MenuItemRow key={item.id} item={item} showCategory={showCategory} />
         ))}
@@ -188,7 +188,7 @@ function AntipastiPanel({
       <div className="space-y-12">
         {groups.map((group) => (
           <section key={group.pairing}>
-            <h2 className="eyebrow border-b border-cream/8 pb-4 text-gold">{group.pairing}</h2>
+            <h2 className="eyebrow border-b border-mist/12 pb-4 text-royal-light">{group.pairing}</h2>
             <div className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
               {group.boards.map((board) => (
                 <AntipastoCard key={board.id} board={board} />
@@ -219,12 +219,12 @@ function SearchResults({
   return (
     <>
       <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-        <p className="text-[0.875rem] text-cream-dim/70">{t.menu.resultsFor(query.trim())}</p>
-        <p className="numeric text-[0.75rem] text-mute">{t.menu.resultCount(total)}</p>
+        <p className="text-[0.875rem] text-mist/70">{t.menu.resultsFor(query.trim())}</p>
+        <p className="numeric text-[0.75rem] text-haze">{t.menu.resultCount(total)}</p>
       </div>
 
       {items.length > 0 ? (
-        <ul className="border-t border-cream/8">
+        <ul className="border-t border-mist/12">
           {items.map((item) => (
             <MenuItemRow key={item.id} item={item} showCategory />
           ))}

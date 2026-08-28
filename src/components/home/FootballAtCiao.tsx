@@ -20,24 +20,24 @@ export function FootballAtCiao() {
   const isTonight = event ? eventBucket(event) === 'today' : false;
 
   return (
-    <section className="border-y border-cream/10 bg-ink-900/60 py-20 sm:py-24">
+    <section className="border-y border-mist/15 bg-deeper/60 py-20 sm:py-24">
       <Container>
         <Reveal className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="eyebrow text-gold">
+            <p className="eyebrow text-royal-light">
               <span className="inline-flex items-center gap-2.5">
-                <span aria-hidden="true" className="h-px w-6 bg-gold/50" />
+                <span aria-hidden="true" className="h-px w-6 bg-royal-light/60" />
                 {isTonight ? t.football.tonightEyebrow : t.football.eyebrow}
               </span>
             </p>
             {event && !isTonight ? (
-              <p className="mt-3 text-[0.875rem] text-cream-dim/70">{t.football.nextUp}</p>
+              <p className="mt-3 text-[0.875rem] text-mist/70">{t.football.nextUp}</p>
             ) : null}
           </div>
 
           <Link
             to="/events"
-            className="group inline-flex items-center gap-2 py-2.5 -my-2.5 text-[0.8125rem] text-cream-dim/70 transition-colors duration-300 hover:text-cream"
+            className="group inline-flex items-center gap-2 py-2.5 -my-2.5 text-[0.8125rem] text-mist/70 transition-colors duration-300 hover:text-cream"
           >
             {t.football.all}
             <ArrowRight
@@ -52,11 +52,11 @@ export function FootballAtCiao() {
           {event ? (
             <MatchCard event={event} featured onOpen={setOpenMatch} />
           ) : (
-            <div className="rounded-sm border border-cream/10 bg-ink-800/60 px-6 py-16 text-center sm:px-10 sm:py-24">
+            <div className="rounded-sm border border-mist/15 bg-surface/60 px-6 py-16 text-center sm:px-10 sm:py-24">
               <p className="font-display text-[clamp(1.75rem,7vw,3rem)] leading-tight text-cream">
                 {t.football.emptyTitle}
               </p>
-              <p className="mt-3 text-[0.9375rem] text-cream-dim/70">{t.football.emptyBody}</p>
+              <p className="mt-3 text-[0.9375rem] text-mist/70">{t.football.emptyBody}</p>
               <Button to="/menu" variant="secondary" size="md" className="mt-9">
                 {t.football.emptyCta}
               </Button>

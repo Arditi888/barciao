@@ -14,7 +14,7 @@ function StreetPattern() {
       preserveAspectRatio="xMidYMid slice"
       className="absolute inset-0 h-full w-full"
     >
-      <g stroke="currentColor" strokeWidth="1" fill="none" className="text-cream/[0.07]">
+      <g stroke="currentColor" strokeWidth="1" fill="none" className="text-mist/[0.12]">
         <path d="M-20 70 L420 40" />
         <path d="M-20 150 L420 128" />
         <path d="M-20 232 L420 218" />
@@ -24,11 +24,11 @@ function StreetPattern() {
         <path d="M352 -20 L354 320" />
       </g>
 
-      <g stroke="currentColor" strokeWidth="2.5" fill="none" className="text-gold/20">
+      <g stroke="currentColor" strokeWidth="2.5" fill="none" className="text-royal-light/45">
         <path d="M-20 150 L420 128" />
       </g>
 
-      <g fill="currentColor" className="text-cream/[0.035]">
+      <g fill="currentColor" className="text-mist/[0.07]">
         <rect x="78" y="52" width="76" height="80" />
         <rect x="180" y="46" width="72" height="86" />
         <rect x="278" y="42" width="64" height="88" />
@@ -50,7 +50,7 @@ export function MapPanel({ className }: { className?: string }) {
       rel="noreferrer noopener"
       className={cx(
         'group relative flex min-h-[15rem] flex-col justify-end overflow-hidden rounded-sm',
-        'border border-cream/10 bg-ink-800/70 p-6 transition-colors duration-400 hover:border-cream/25',
+        'border border-mist/15 bg-surface/70 p-6 transition-colors duration-400 hover:border-mist/30',
         className,
       )}
     >
@@ -61,18 +61,18 @@ export function MapPanel({ className }: { className?: string }) {
         aria-hidden="true"
         className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
       >
-        <span className="animate-status-pulse absolute h-9 w-9 rounded-full bg-gold/25" />
-        <span className="relative flex h-10 w-10 items-center justify-center rounded-full border border-gold/50 bg-ink/85 text-gold">
+        <span className="animate-status-pulse absolute h-9 w-9 rounded-full bg-royal-light/35" />
+        <span className="relative flex h-10 w-10 items-center justify-center rounded-full border border-royal-light/60 bg-deep/90 text-royal-light">
           <MapPin className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.5} />
         </span>
       </span>
 
       <div className="relative flex items-end justify-between gap-4">
         <div>
-          <p className="eyebrow text-mute">{business.name}</p>
+          <p className="eyebrow text-haze">{business.name}</p>
           <p className="mt-2 text-[0.9375rem] text-cream">{label}</p>
         </div>
-        <span className="inline-flex items-center gap-1.5 text-[0.75rem] whitespace-nowrap text-cream-dim/70 transition-colors duration-300 group-hover:text-gold">
+        <span className="inline-flex items-center gap-1.5 text-[0.75rem] whitespace-nowrap text-mist/70 transition-colors duration-300 group-hover:text-royal-light">
           {t.visit.maps}
           <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.5} aria-hidden="true" />
         </span>

@@ -77,7 +77,7 @@ export function ContactLinks({ className, includeMaps = true }: ContactLinksProp
   const rows = buildRows(includeMaps);
 
   return (
-    <ul className={cx('divide-y divide-cream/8', className)}>
+    <ul className={cx('divide-y divide-mist/12', className)}>
       {rows.map((row) => (
         <li key={row.key}>
           <a
@@ -86,15 +86,15 @@ export function ContactLinks({ className, includeMaps = true }: ContactLinksProp
             rel={row.href.startsWith('http') ? 'noreferrer noopener' : undefined}
             className="group flex items-center gap-4 py-4 transition-colors duration-300"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xs border border-cream/12 text-cream-dim transition-colors duration-300 group-hover:border-gold/50 group-hover:text-gold">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xs border border-mist/18 text-mist transition-colors duration-300 group-hover:border-royal/50 group-hover:text-royal-light">
               <row.icon className="h-[1.05rem] w-[1.05rem]" strokeWidth={1.5} aria-hidden="true" />
             </span>
 
             <span className="min-w-0 flex-1">
-              <span className="block text-[0.8125rem] text-cream transition-colors duration-300 group-hover:text-gold-soft">
+              <span className="block text-[0.8125rem] text-cream transition-colors duration-300 group-hover:text-royal-light">
                 {row.label}
               </span>
-              <span className="mt-0.5 block truncate text-[0.75rem] text-mute">{row.value}</span>
+              <span className="mt-0.5 block truncate text-[0.75rem] text-haze">{row.value}</span>
             </span>
           </a>
         </li>

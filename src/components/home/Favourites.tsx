@@ -20,7 +20,7 @@ export function Favourites() {
           action={
             <Link
               to="/menu"
-              className="group inline-flex items-center gap-2 py-2.5 -my-2.5 text-[0.8125rem] text-cream-dim/70 transition-colors duration-300 hover:text-cream"
+              className="group inline-flex items-center gap-2 py-2.5 -my-2.5 text-[0.8125rem] text-mist/70 transition-colors duration-300 hover:text-cream"
             >
               {t.favourites.cta}
               <ArrowRight

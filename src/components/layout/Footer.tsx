@@ -11,7 +11,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-cream/10 pt-14 pb-28 lg:pb-14">
+    <footer className="border-t border-mist/15 pt-14 pb-28 lg:pb-14">
       <Container>
         <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
           <div>
@@ -26,7 +26,7 @@ export function Footer() {
               <Link
                 key={item.to}
                 to={item.to}
-                className="py-2.5 text-sm text-cream-dim/70 transition-colors duration-300 hover:text-cream"
+                className="py-2.5 text-sm text-mist/70 transition-colors duration-300 hover:text-cream"
               >
                 {item.label}
               </Link>
@@ -36,7 +36,7 @@ export function Footer() {
               href={mapsHref}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-2 py-2.5 text-sm text-cream-dim/70 transition-colors duration-300 hover:text-cream"
+              className="inline-flex items-center gap-2 py-2.5 text-sm text-mist/70 transition-colors duration-300 hover:text-cream"
             >
               <MapPin className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
               {business.location.label}
@@ -47,7 +47,7 @@ export function Footer() {
                 href={contact.instagram}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-2 py-2.5 text-sm text-cream-dim/70 transition-colors duration-300 hover:text-cream"
+                className="inline-flex items-center gap-2 py-2.5 text-sm text-mist/70 transition-colors duration-300 hover:text-cream"
               >
                 <AtSign className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
                 {t.visit.instagram}
@@ -56,7 +56,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-cream/10 pt-6 text-[0.75rem] text-mute sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-2 border-t border-mist/15 pt-6 text-[0.75rem] text-haze sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {business.name}
           </p>

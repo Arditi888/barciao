@@ -19,9 +19,9 @@ export function CiaoMood() {
 
       <Container>
         <Reveal>
-          <p className="eyebrow text-gold">
+          <p className="eyebrow text-royal-light">
             <span className="inline-flex items-center gap-2.5">
-              <span aria-hidden="true" className="h-px w-6 bg-gold/50" />
+              <span aria-hidden="true" className="h-px w-6 bg-royal-light/60" />
               {t.mood.eyebrow}
             </span>
           </p>
@@ -33,7 +33,7 @@ export function CiaoMood() {
               <span
                 className={cx(
                   'font-display leading-[1.12] text-balance',
-                  index % 2 === 1 ? 'text-cream-dim/70' : 'text-cream',
+                  index % 2 === 1 ? 'text-mist/70' : 'text-cream',
                 )}
                 style={{ fontSize: 'clamp(1.75rem,7.5vw,3.5rem)' }}
               >
@@ -44,7 +44,7 @@ export function CiaoMood() {
         </ul>
 
         <Reveal delay={0.1} className="mt-14">
-          <p className="font-display text-[clamp(1.25rem,5vw,2rem)] text-gold italic">
+          <p className="font-display text-[clamp(1.25rem,5vw,2rem)] text-royal-light italic">
             {t.mood.closing}
           </p>
         </Reveal>

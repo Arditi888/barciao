@@ -23,7 +23,7 @@ export function QuizStep({ question, selected, onSelect }: QuizStepProps) {
       </h1>
 
       {question.caption ? (
-        <p className="mt-4 text-[0.9375rem] text-cream-dim/70">{question.caption}</p>
+        <p className="mt-4 text-[0.9375rem] text-mist/70">{question.caption}</p>
       ) : null}
 
       <div role="group" aria-labelledby={headingId} className="mt-10 grid gap-2.5 sm:grid-cols-2">
@@ -40,24 +40,24 @@ export function QuizStep({ question, selected, onSelect }: QuizStepProps) {
                 'group relative flex min-h-[4.5rem] flex-col justify-center gap-1 overflow-hidden',
                 'rounded-sm border px-5 py-4 text-left transition-colors duration-300',
                 isSelected
-                  ? 'border-gold/60 bg-gold/10'
-                  : 'border-cream/12 bg-ink-800/60 hover:border-cream/30 hover:bg-ink-700/60',
+                  ? 'border-royal/60 bg-royal/10'
+                  : 'border-mist/18 bg-surface/60 hover:border-mist/35 hover:bg-surface-2/60',
               )}
             >
               <span
                 aria-hidden="true"
-                className="absolute inset-y-0 left-0 w-px bg-gold transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-y-100 scale-y-0 origin-center"
+                className="absolute inset-y-0 left-0 w-px bg-royal transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-y-100 scale-y-0 origin-center"
               />
               <span
                 className={cx(
                   'text-[1rem] transition-colors duration-300',
-                  isSelected ? 'text-gold' : 'text-cream',
+                  isSelected ? 'text-royal-light' : 'text-cream',
                 )}
               >
                 {option.label}
               </span>
               {option.hint ? (
-                <span className="text-[0.75rem] text-mute">{option.hint}</span>
+                <span className="text-[0.75rem] text-haze">{option.hint}</span>
               ) : null}
             </button>
           );

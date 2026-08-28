@@ -22,23 +22,23 @@ export function DrinkCard({ name, meta, price, description, category, className 
       to={`/menu?c=${category}`}
       className={cx(
         'group relative flex h-full flex-col justify-between overflow-hidden rounded-sm',
-        'border border-cream/10 bg-ink-800/70 p-5 transition-colors duration-400',
-        'hover:border-cream/25 hover:bg-ink-700/70 sm:p-6',
+        'border border-mist/15 bg-surface/70 p-5 transition-colors duration-400',
+        'hover:border-mist/30 hover:bg-surface-2/70 sm:p-6',
         className,
       )}
     >
       <span
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px w-0 bg-gold transition-[width] duration-600 ease-[var(--ease-out-expo)] group-hover:w-full"
+        className="absolute inset-x-0 top-0 h-px w-0 bg-royal transition-[width] duration-600 ease-[var(--ease-out-expo)] group-hover:w-full"
       />
 
       <div>
-        <p className="eyebrow text-mute">{meta}</p>
-        <h3 className="mt-3.5 font-display text-[1.4375rem] leading-tight text-cream transition-colors duration-300 group-hover:text-gold-soft">
+        <p className="eyebrow text-haze">{meta}</p>
+        <h3 className="mt-3.5 font-display text-[1.4375rem] leading-tight text-cream transition-colors duration-300 group-hover:text-royal-light">
           {name}
         </h3>
         {description ? (
-          <p className="mt-2.5 line-clamp-2 text-[0.8125rem] leading-relaxed text-cream-dim/60">
+          <p className="mt-2.5 line-clamp-2 text-[0.8125rem] leading-relaxed text-mist/75">
             {description}
           </p>
         ) : null}
@@ -46,11 +46,11 @@ export function DrinkCard({ name, meta, price, description, category, className 
 
       <p className="mt-8 flex items-baseline gap-1.5">
         {price === null ? (
-          <span className="text-[0.8125rem] text-mute">{t.menu.placeholderPrice}</span>
+          <span className="text-[0.8125rem] text-haze">{t.menu.placeholderPrice}</span>
         ) : (
           <>
             <span className="numeric font-display text-[1.375rem] leading-none text-cream">{amount}</span>
-            <span className="text-[0.6875rem] tracking-[0.1em] text-mute uppercase">{unit}</span>
+            <span className="text-[0.6875rem] tracking-[0.1em] text-haze uppercase">{unit}</span>
           </>
         )}
       </p>

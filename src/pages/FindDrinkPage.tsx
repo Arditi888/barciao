@@ -53,7 +53,7 @@ export function FindDrinkPage() {
       {!finished ? (
         <QuizProgress current={step + 1} total={TOTAL} />
       ) : (
-        <div className="h-px w-full bg-gold" aria-hidden="true" />
+        <div className="h-px w-full bg-royal" aria-hidden="true" />
       )}
 
       <div className="flex flex-1 flex-col justify-center py-12 sm:py-16">
@@ -73,7 +73,7 @@ export function FindDrinkPage() {
           <button
             type="button"
             onClick={back}
-            className="group inline-flex items-center gap-2.5 py-3 -my-3 text-[0.8125rem] text-cream-dim/60 transition-colors duration-300 hover:text-cream"
+            className="group inline-flex items-center gap-2.5 py-3 -my-3 text-[0.8125rem] text-mist/60 transition-colors duration-300 hover:text-cream"
           >
             <ArrowLeft
               className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-0.5"

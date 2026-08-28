@@ -37,35 +37,35 @@ function ActionCard({
       {/* Gold rule that draws itself across the top edge on hover. */}
       <span
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px w-0 bg-gold transition-[width] duration-600 ease-[var(--ease-out-expo)] group-hover:w-full"
+        className="absolute inset-x-0 top-0 h-px w-0 bg-royal transition-[width] duration-600 ease-[var(--ease-out-expo)] group-hover:w-full"
       />
 
       <div className="flex items-start justify-between">
-        <Icon className="h-6 w-6 text-gold" strokeWidth={1.25} aria-hidden="true" />
-        <span className="numeric eyebrow text-mute">
+        <Icon className="h-6 w-6 text-royal-light" strokeWidth={1.25} aria-hidden="true" />
+        <span className="numeric eyebrow text-haze">
           {String(index).padStart(2, '0')}
         </span>
       </div>
 
       <div className="mt-auto pt-10">
-        <h3 className="font-display text-[1.5rem] leading-none text-cream transition-colors duration-300 group-hover:text-gold-soft">
+        <h3 className="font-display text-[1.5rem] leading-none text-cream transition-colors duration-300 group-hover:text-royal-light">
           {title}
         </h3>
         {footer ?? (
-          <p className="mt-2.5 text-[0.8125rem] leading-snug text-cream-dim/60">{caption}</p>
+          <p className="mt-2.5 text-[0.8125rem] leading-snug text-mist/75">{caption}</p>
         )}
       </div>
 
       <ArrowUpRight
         aria-hidden="true"
-        className="absolute right-5 bottom-5 h-4 w-4 text-mute-dim opacity-0 transition-all duration-400 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gold group-hover:opacity-100"
+        className="absolute right-5 bottom-5 h-4 w-4 text-haze-dim opacity-0 transition-all duration-400 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-royal-light group-hover:opacity-100"
       />
     </>
   );
 
   const classes = cx(
-    'group relative flex min-h-[11rem] flex-col overflow-hidden rounded-sm border border-cream/10',
-    'bg-ink-800/70 p-5 transition-colors duration-400 hover:border-cream/25 hover:bg-ink-700/70',
+    'group relative flex min-h-[11rem] flex-col overflow-hidden rounded-sm border border-mist/15',
+    'bg-surface/70 p-5 transition-colors duration-400 hover:border-mist/30 hover:bg-surface-2/70',
     'sm:min-h-[12.5rem] sm:p-6',
     className,
   );
@@ -94,9 +94,9 @@ export function QuickActions() {
     <section className="py-20 sm:py-24">
       <Container>
         <Reveal>
-          <p className="eyebrow text-gold">
+          <p className="eyebrow text-royal-light">
             <span className="inline-flex items-center gap-2.5">
-              <span aria-hidden="true" className="h-px w-6 bg-gold/50" />
+              <span aria-hidden="true" className="h-px w-6 bg-royal-light/60" />
               {t.quickActions.eyebrow}
             </span>
           </p>
@@ -149,10 +149,10 @@ export function QuickActions() {
               className="h-full"
               footer={
                 <div className="mt-2.5 space-y-1.5">
-                  <p className="numeric text-[0.8125rem] text-cream-dim">
+                  <p className="numeric text-[0.8125rem] text-mist">
                     {today} · {hours ?? t.status.closed}
                   </p>
-                  <span className="inline-flex items-center gap-2 text-[0.6875rem] tracking-[0.08em] text-mute">
+                  <span className="inline-flex items-center gap-2 text-[0.6875rem] tracking-[0.08em] text-haze">
                     <StatusDot state={status.state} />
                     {status.state === 'closed' ? t.status.closed : t.status.open}
                   </span>

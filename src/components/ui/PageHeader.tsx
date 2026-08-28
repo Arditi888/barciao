@@ -21,7 +21,7 @@ export function PageHeader({ title, caption, children, className }: PageHeaderPr
             {title}
           </h1>
           {caption ? (
-            <p className="mt-4 max-w-prose text-[0.9375rem] text-cream-dim/70">{caption}</p>
+            <p className="mt-4 max-w-prose text-[0.9375rem] text-mist/70">{caption}</p>
           ) : null}
         </Reveal>
 

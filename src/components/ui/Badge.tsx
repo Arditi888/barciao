@@ -3,11 +3,11 @@ import type { Badge as BadgeKind } from '../../types';
 import { cx } from '../../utils/format';
 
 const tones: Record<BadgeKind, string> = {
-  popular: 'border-cream/20 text-cream-dim',
-  'ciao-pick': 'border-gold/45 text-gold',
-  new: 'border-live/45 text-live',
-  premium: 'border-cream/25 text-cream',
-  placeholder: 'border-cream/12 text-mute',
+  popular: 'border-mist/25 text-mist',
+  'ciao-pick': 'border-royal-light/60 text-royal-light',
+  new: 'border-royal-light/60 text-royal-light',
+  premium: 'border-mist/35 text-cream',
+  placeholder: 'border-mist/15 text-haze',
 };
 
 export function Badge({ kind, className }: { kind: BadgeKind; className?: string }) {

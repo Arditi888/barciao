@@ -11,7 +11,7 @@ export function BottomNavigation() {
       aria-label={t.nav.primary}
       className={cx(
         'fixed inset-x-0 bottom-0 z-50 lg:hidden',
-        'border-t border-cream/10 bg-ink/92 backdrop-blur-xl supports-[backdrop-filter]:bg-ink/80',
+        'border-t border-royal-light/20 bg-deeper/95 backdrop-blur-xl supports-[backdrop-filter]:bg-deeper/85',
       )}
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
@@ -25,7 +25,7 @@ export function BottomNavigation() {
                 cx(
                   'relative flex h-[4.25rem] flex-col items-center justify-center gap-1.5',
                   'transition-colors duration-300',
-                  isActive ? 'text-gold' : 'text-cream-dim/70 active:text-cream',
+                  isActive ? 'text-white' : 'text-mist/70 active:text-cream',
                 )
               }
             >
@@ -34,7 +34,7 @@ export function BottomNavigation() {
                   <span
                     aria-hidden="true"
                     className={cx(
-                      'absolute top-0 h-px bg-gold transition-all duration-400 ease-[var(--ease-out-expo)]',
+                      'absolute top-0 h-0.5 bg-royal transition-all duration-400 ease-[var(--ease-out-expo)]',
                       isActive ? 'w-10 opacity-100' : 'w-0 opacity-0',
                     )}
                   />

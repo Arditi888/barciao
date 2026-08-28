@@ -6,27 +6,37 @@
    declared once here and consumed as a Tailwind utility.
    ------------------------------------------------------------------ */
 @theme {
-  /* Ground — deep charcoal, never pure black */
-  --color-ink: #0a0a0b;
-  --color-ink-900: #0e0e10;
-  --color-ink-800: #131316;
-  --color-ink-700: #1a1a1e;
-  --color-ink-600: #232329;
-  --color-ink-500: #2f2f36;
+  /* ------------------------------------------------------------------
+     ROYAL BLUE
+     The brand is #4169E1. Large surfaces use the deep end of the ramp;
+     the bright royal is reserved for things you can act on — buttons,
+     active states, links, indicators. Text is warm white over blue.
+     ------------------------------------------------------------------ */
 
-  /* Ink-on-dark */
-  --color-cream: #f2ede3;
-  --color-cream-dim: #cdc6b9;
-  --color-mute: #97907f;
-  --color-mute-dim: #6d675c;
+  /* Grounds — deep royal blue, never charcoal */
+  --color-deeper: #071539;
+  --color-deep: #0b1f52;
+  --color-surface: #102a63;
+  --color-surface-2: #173a8f;
+  --color-surface-3: #23499f;
 
-  /* Accents */
-  --color-gold: #c6a15b;
-  --color-gold-soft: #e2caa0;
-  --color-gold-deep: #8c6d33;
-  --color-burgundy: #7a1f33;
-  --color-aperol: #e2571f;
-  --color-live: #4ea36b;
+  /* Interactive royal blue */
+  --color-royal: #4169e1;
+  --color-royal-light: #6f8ff0;
+  /* For labels sitting on a royal-tinted panel, where royal-light
+     loses too much contrast against the lifted background. */
+  --color-royal-pale: #a9c0f8;
+  --color-royal-dark: #173a8f;
+
+  /* Type — warm white over blue */
+  --color-white: #ffffff;
+  --color-cream: #f7f5ef;
+  --color-mist: #c9d3f5;
+  --color-haze: #97a6da;
+  --color-haze-dim: #6d7cb4;
+
+  /* The single warm accent, used only for the closing-soon warning. */
+  --color-warn: #e8b964;
 
   /* Type */
   --font-display: 'Bodoni Moda', 'Didot', 'Times New Roman', serif;
@@ -63,7 +73,7 @@
   }
 
   body {
-    background-color: var(--color-ink);
+    background-color: var(--color-deep);
     color: var(--color-cream);
     font-family: var(--font-sans);
     font-synthesis-weight: none;
@@ -73,13 +83,13 @@
   }
 
   ::selection {
-    background: var(--color-gold);
-    color: var(--color-ink);
+    background: var(--color-royal);
+    color: var(--color-white);
   }
 
   /* One visible, consistent focus ring across the whole site. */
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-royal-light);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -132,7 +142,7 @@
 
 /* Hairline rule matching the card borders. */
 @utility rule {
-  border-color: color-mix(in srgb, var(--color-cream) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-mist) 16%, transparent);
 }
 
 /* Fades the right edge of a horizontal scroller to signal more content. */
@@ -159,8 +169,8 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.4;
-    mix-blend-mode: overlay;
+    opacity: 0.32;
+    mix-blend-mode: soft-light;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
   }
 }

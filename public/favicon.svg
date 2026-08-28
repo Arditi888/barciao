@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="6" fill="#0a0a0b"/>
-  <rect x="2.5" y="2.5" width="59" height="59" rx="4.5" fill="none" stroke="#c6a15b" stroke-opacity="0.55"/>
+  <rect width="64" height="64" rx="6" fill="#0B1F52"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="4.5" fill="none" stroke="#4169E1" stroke-opacity="0.85"/>
   <text x="32" y="45" font-family="Bodoni MT, Didot, Georgia, serif" font-size="40"
-        text-anchor="middle" fill="#f2ede3">C</text>
+        text-anchor="middle" fill="#F7F5EF">C</text>
 </svg>

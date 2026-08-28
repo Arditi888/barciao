@@ -3,16 +3,19 @@ import type { OpeningState } from '../../types';
 import { cx } from '../../utils/format';
 import { shortStatusLabel } from '../../utils/openingHours';
 
+/* Open reads in the brand's own bright royal. Closing-soon is the one
+   place a warm tone earns its keep: it is a warning, and a second blue
+   would not register as one. */
 const dotTone: Record<OpeningState, string> = {
-  open: 'bg-live',
-  'closing-soon': 'bg-gold',
-  closed: 'bg-mute-dim',
+  open: 'bg-royal-light',
+  'closing-soon': 'bg-warn',
+  closed: 'bg-haze-dim',
 };
 
 const textTone: Record<OpeningState, string> = {
   open: 'text-cream',
-  'closing-soon': 'text-gold-soft',
-  closed: 'text-mute',
+  'closing-soon': 'text-warn',
+  closed: 'text-haze',
 };
 
 /** A status light, not an emoji: a coloured dot that gently haloes
@@ -45,7 +48,7 @@ export function OpeningStatus({ variant = 'inline', className }: OpeningStatusPr
     return (
       <span
         className={cx(
-          'inline-flex items-center gap-2.5 rounded-xs border border-cream/12 bg-cream/[0.04]',
+          'inline-flex items-center gap-2.5 rounded-xs border border-royal-light/25 bg-royal/12',
           'px-3.5 py-2 text-[0.75rem] tracking-[0.06em] backdrop-blur-sm',
           textTone[status.state],
           className,

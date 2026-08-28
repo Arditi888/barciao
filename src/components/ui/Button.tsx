@@ -47,11 +47,11 @@ const base =
   'ease-[var(--ease-soft)] disabled:pointer-events-none disabled:opacity-40 select-none';
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-gold text-ink hover:bg-gold-soft active:bg-gold-soft',
+  primary: 'bg-royal text-white hover:bg-royal-light hover:text-deeper active:bg-royal-light',
   secondary:
-    'border border-cream/25 text-cream hover:border-cream/60 hover:bg-cream/[0.04] active:bg-cream/[0.08]',
+    'border border-mist/30 text-cream hover:border-royal-light hover:bg-royal/15 active:bg-royal/25',
   ghost: 'text-cream/70 hover:text-cream',
-  quiet: 'bg-cream/[0.06] text-cream hover:bg-cream/[0.11]',
+  quiet: 'bg-royal/15 text-cream hover:bg-royal/25',
 };
 
 const sizes: Record<Size, string> = {

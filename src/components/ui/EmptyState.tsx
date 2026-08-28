@@ -14,12 +14,12 @@ export function EmptyState({ title, body, action, className }: EmptyStateProps) 
   return (
     <div
       className={cx(
-        'rounded-sm border border-dashed border-cream/12 px-6 py-16 text-center sm:py-20',
+        'rounded-sm border border-dashed border-mist/18 px-6 py-16 text-center sm:py-20',
         className,
       )}
     >
       <p className="font-display text-[1.5rem] leading-tight text-cream sm:text-[1.75rem]">{title}</p>
-      {body ? <p className="mt-3 text-[0.875rem] text-cream-dim/60">{body}</p> : null}
+      {body ? <p className="mt-3 text-[0.875rem] text-mist/60">{body}</p> : null}
       {action ? <div className="mt-8">{action}</div> : null}
     </div>
   );

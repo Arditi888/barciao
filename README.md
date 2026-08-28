@@ -323,8 +323,31 @@ src/
 
 **Design tokens** live in `src/index.css` under `@theme` — colours,
 the two type families, radii, easings. Components use those tokens
-through Tailwind utilities rather than hard-coded values, so changing
-the accent colour is one line.
+through Tailwind utilities rather than hard-coded values.
+
+The brand is **royal blue, `#4169E1`**. The ramp is deliberately split
+by job, and that split is what keeps the theme readable:
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `deeper` | `#071539` | Navigation, tab bar, match cards, footers |
+| `deep` | `#0B1F52` | The page ground |
+| `surface` | `#102A63` | Cards and raised panels |
+| `surface-2` | `#173A8F` | Hover and lifted states |
+| `royal` | `#4169E1` | Buttons, indicators, active fills, links |
+| `royal-light` | `#6F8FF0` | Accent **text** and borders on blue |
+| `royal-pale` | `#A9C0F8` | Labels on a royal-tinted panel |
+| `cream` | `#F7F5EF` | Headings and the CIAO wordmark |
+| `mist` | `#C9D3F5` | Secondary text and hairlines |
+| `haze` | `#97A6DA` | Tertiary text |
+| `warn` | `#E8B964` | The one warm accent — "closing soon" only |
+
+Large surfaces take the deep end; the bright `royal` is reserved for
+things you can act on. `royal` is never used for small text — at
+`#4169E1` on the deep ground it falls below contrast minimums, which is
+why accent text uses `royal-light` and labels on tinted panels use
+`royal-pale`. Every piece of text on the site was measured against its
+actual composited background and passes WCAG AA.
 
 **The drink finder** scores every product that has a `profile` against
 the five answers, using the weights at the top of

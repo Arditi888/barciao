@@ -5,7 +5,7 @@ interface WordmarkProps {
   className?: string;
   /** Renders "BAR • TIRANA" beneath the name. */
   withTagline?: boolean;
-  tone?: 'cream' | 'gold';
+  tone?: 'cream' | 'royal';
 }
 
 /** CIAO — set in the display serif with the wide tracking that makes
@@ -16,13 +16,13 @@ export function Wordmark({ className, withTagline = false, tone = 'cream' }: Wor
       <span
         className={cx(
           'font-display tracking-[0.2em] uppercase',
-          tone === 'gold' ? 'text-gold' : 'text-cream',
+          tone === 'royal' ? 'text-royal-light' : 'text-cream',
         )}
       >
         {business.wordmark}
       </span>
       {withTagline ? (
-        <span className="eyebrow mt-2 text-[0.625rem] text-mute">{business.tagline}</span>
+        <span className="eyebrow mt-2 text-[0.625rem] text-haze">{business.tagline}</span>
       ) : null}
     </span>
   );

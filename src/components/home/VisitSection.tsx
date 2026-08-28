@@ -12,7 +12,7 @@ import { MapPanel } from '../visit/MapPanel';
 
 export function VisitSection() {
   return (
-    <section className="border-t border-cream/10 bg-ink-900/60 py-20 sm:py-24">
+    <section className="border-t border-mist/15 bg-deeper/60 py-20 sm:py-24">
       <Container>
         <SectionHeader
           eyebrow={t.visit.eyebrow}
@@ -21,7 +21,7 @@ export function VisitSection() {
           action={
             <Link
               to="/visit"
-              className="group inline-flex items-center gap-2 py-2.5 -my-2.5 text-[0.8125rem] text-cream-dim/70 transition-colors duration-300 hover:text-cream"
+              className="group inline-flex items-center gap-2 py-2.5 -my-2.5 text-[0.8125rem] text-mist/70 transition-colors duration-300 hover:text-cream"
             >
               {t.nav.visit}
               <ArrowRight
@@ -39,15 +39,15 @@ export function VisitSection() {
           </Reveal>
 
           <Reveal delay={0.08} className="flex flex-col gap-4">
-            <div className="rounded-sm border border-cream/10 bg-ink-800/70 p-6">
+            <div className="rounded-sm border border-mist/15 bg-surface/70 p-6">
               <div className="flex items-center justify-between gap-4">
-                <h3 className="eyebrow text-mute">{t.visit.hours}</h3>
+                <h3 className="eyebrow text-haze">{t.visit.hours}</h3>
                 <OpeningStatus variant="block" className="text-[0.75rem]" />
               </div>
               <HoursTable className="mt-4" />
             </div>
 
-            <div className="rounded-sm border border-cream/10 bg-ink-800/70 px-6 py-2">
+            <div className="rounded-sm border border-mist/15 bg-surface/70 px-6 py-2">
               <ContactLinks />
             </div>
           </Reveal>

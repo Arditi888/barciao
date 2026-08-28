@@ -25,7 +25,7 @@ export function MenuItemRow({ item, showCategory = false, className }: MenuItemR
   return (
     <li
       className={cx(
-        'group flex items-start justify-between gap-5 border-b border-cream/8 py-4 sm:py-[1.125rem]',
+        'group flex items-start justify-between gap-5 border-b border-mist/12 py-4 sm:py-[1.125rem]',
         className,
       )}
     >
@@ -39,17 +39,17 @@ export function MenuItemRow({ item, showCategory = false, className }: MenuItemR
           ))}
         </div>
 
-        {meta ? <p className="numeric mt-1 text-[0.75rem] text-mute">{meta}</p> : null}
+        {meta ? <p className="numeric mt-1 text-[0.75rem] text-haze">{meta}</p> : null}
 
         {item.description ? (
-          <p className="mt-2 max-w-prose text-[0.8125rem] leading-relaxed text-cream-dim/60">
+          <p className="mt-2 max-w-prose text-[0.8125rem] leading-relaxed text-mist/75">
             {item.description}
           </p>
         ) : null}
 
         {item.options?.length ? (
-          <p className="mt-2.5 text-[0.75rem] leading-relaxed text-cream-dim/55">
-            <span className="text-mute">{t.menu.options}: </span>
+          <p className="mt-2.5 text-[0.75rem] leading-relaxed text-mist/55">
+            <span className="text-haze">{t.menu.options}: </span>
             {item.options.join(' · ')}
           </p>
         ) : null}
@@ -57,13 +57,13 @@ export function MenuItemRow({ item, showCategory = false, className }: MenuItemR
 
       <div className="shrink-0 pt-0.5 text-right">
         {unpriced ? (
-          <span className="text-[0.75rem] text-mute">{t.menu.placeholderPrice}</span>
+          <span className="text-[0.75rem] text-haze">{t.menu.placeholderPrice}</span>
         ) : (
           <span className="flex items-baseline justify-end gap-1.5">
             <span className="numeric font-display text-[1.25rem] leading-none text-cream sm:text-[1.375rem]">
               {amount}
             </span>
-            <span className="text-[0.625rem] tracking-[0.12em] text-mute uppercase">{unit}</span>
+            <span className="text-[0.625rem] tracking-[0.12em] text-haze uppercase">{unit}</span>
           </span>
         )}
       </div>

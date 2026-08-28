@@ -101,7 +101,8 @@ export function CategoryTabs({ active, onChange, panelId, className }: CategoryT
               className={cx(
                 'relative shrink-0 px-3.5 py-4 text-[0.8125rem] tracking-[0.04em] whitespace-nowrap',
                 'transition-colors duration-300',
-                isActive ? 'text-gold' : 'text-cream-dim/60 hover:text-cream',
+                isActive && 'bg-royal/20',
+                isActive ? 'text-white' : 'text-mist/65 hover:text-cream',
               )}
             >
               {category.label}
@@ -111,7 +112,7 @@ export function CategoryTabs({ active, onChange, panelId, className }: CategoryT
 
         <span
           aria-hidden="true"
-          className="absolute bottom-0 h-px bg-gold transition-[transform,width] duration-450 ease-[var(--ease-out-expo)]"
+          className="absolute bottom-0 h-0.5 bg-royal transition-[transform,width] duration-450 ease-[var(--ease-out-expo)]"
           style={{ width: indicator.width, transform: `translateX(${indicator.left}px)` }}
         />
       </div>

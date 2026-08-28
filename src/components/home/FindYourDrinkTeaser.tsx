@@ -20,7 +20,7 @@ function ChipRow({ labels, className }: { labels: string[]; className?: string }
       {labels.map((label) => (
         <li
           key={label}
-          className="shrink-0 rounded-xs border border-cream/12 px-3.5 py-2 text-[0.75rem] whitespace-nowrap text-cream-dim/65"
+          className="shrink-0 rounded-xs border border-mist/18 px-3.5 py-2 text-[0.75rem] whitespace-nowrap text-mist/65"
         >
           {label}
         </li>
@@ -31,12 +31,12 @@ function ChipRow({ labels, className }: { labels: string[]; className?: string }
 
 export function FindYourDrinkTeaser() {
   return (
-    <section className="relative overflow-hidden border-y border-cream/10 bg-ink-900/60 py-20 sm:py-28">
+    <section className="relative overflow-hidden border-y border-mist/15 bg-deeper/60 py-20 sm:py-28">
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10"
         style={{
-          background: 'radial-gradient(52% 60% at 50% 46%, rgba(198,161,91,0.13) 0%, transparent 70%)',
+          background: 'radial-gradient(52% 60% at 50% 46%, rgba(65,105,225,0.35) 0%, transparent 70%)',
         }}
       />
 
@@ -56,7 +56,7 @@ export function FindYourDrinkTeaser() {
 
       <Container size="narrow">
         <Reveal className="relative py-16 text-center sm:py-20">
-          <span className="inline-flex items-center gap-2.5 text-gold">
+          <span className="inline-flex items-center gap-2.5 text-royal-light">
             <Sparkles className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
             <span className="eyebrow">{t.findDrink.eyebrow}</span>
           </span>
@@ -65,7 +65,7 @@ export function FindYourDrinkTeaser() {
             {t.findDrink.title}
           </h2>
 
-          <p className="mx-auto mt-5 max-w-md text-[0.9375rem] leading-relaxed text-cream-dim/75">
+          <p className="mx-auto mt-5 max-w-md text-[0.9375rem] leading-relaxed text-mist/75">
             {t.findDrink.caption}
           </p>
 
